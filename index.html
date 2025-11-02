@@ -1,276 +1,202 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!doctype html>
+<html lang="pt">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1, user-scalable=no">
-  <title>AUXÍLIO SLEEPFZ IOS — Safe Build</title>
-  <style>
-    :root { --azul:#0077ff; --bg1:#001a33; --bg2:#000c1f; }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif;
-      display:flex;align-items:center;justify-content:center;padding:20px;
-    }
-    .container{
-      width:90%;max-width:380px;background:linear-gradient(135deg,var(--bg1),var(--bg2));
-      padding:15px;border-radius:12px;border:2px solid var(--azul);box-shadow:0 0 10px var(--azul);
-    }
-    h3{margin:0 0 10px;color:var(--azul);text-align:center;font-size:16px;letter-spacing:.5px}
-    .tabs{display:flex;gap:6px;margin-bottom:6px}
-    .tab{flex:1;padding:6px;background:#003366;border-radius:10px;text-align:center;font-weight:bold;cursor:pointer}
-    .tab.active{background:linear-gradient(135deg,#004488,#0066cc);box-shadow:0 0 6px var(--azul)}
-    .content{display:none;padding-top:8px}
-    .content.active{display:block}
-    .option{display:flex;align-items:center;gap:8px;margin:6px 0;font-weight:bold}
-    input[type="checkbox"]{transform:scale(1.2);accent-color:var(--azul)}
-    .slider-container{display:flex;align-items:center;gap:10px;margin:8px 0}
-    .slider{flex:1;accent-color:var(--azul);height:4px;border-radius:8px;box-shadow:0 0 6px rgba(0,119,255,.8)}
-    .dropdown{width:100%;padding:8px;background:#000c1f;border:1px solid var(--azul);color:#fff;border-radius:6px;margin:8px 0;font-weight:bold;text-align:center}
-    h4{margin:10px 0 6px;color:var(--azul);font-size:14px}
-    .radio-container{display:flex;gap:8px;justify-content:space-around;flex-wrap:wrap}
-    .radio-item{display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:6px;border:1px solid transparent}
-    .radio-item input[type="radio"]{accent-color:var(--azul)}
-    .radio-item.active{background:var(--azul);box-shadow:0 0 8px var(--azul)}
-    .button{
-      width:100%;padding:12px;background:linear-gradient(135deg,#0044aa,#002244);border:none;color:#fff;
-      font-weight:bold;border-radius:6px;cursor:pointer;margin-top:8px;box-shadow:0 0 10px var(--azul)
-    }
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9999}
-    .modal-card{width:100%;max-width:360px;background:linear-gradient(135deg,var(--bg1),var(--bg2));border:2px solid var(--azul);border-radius:12px;padding:16px;box-shadow:0 0 12px var(--azul);text-align:center}
-    .modal-card h2{margin:0 0 6px;color:var(--azul);font-size:18px}
-    .input{width:100%;padding:10px;border-radius:8px;border:1px solid var(--azul);background:#000c1f;color:#fff}
-    .row{display:flex;gap:8px;margin-top:12px}
-    .btn{flex:1;padding:10px;border-radius:8px;border:1px solid var(--azul);background:#003366;color:#fff;font-weight:bold;cursor:pointer}
-    .btn.primary{background:linear-gradient(135deg,#0044aa,#002244);border:none;box-shadow:0 0 8px var(--azul)}
-    .hidden{display:none!important}
-    /* Bandeau de secours si JS plante ou est bloqué */
-    .fallback{
-      position:fixed;left:0;right:0;top:0;background:#222;color:#ffdf6b;padding:8px 12px;font-size:13px;
-      border-bottom:1px solid #444;z-index:10000;text-align:center
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AUXILIO BY MOHAMED</title>
+<style>
+  :root{
+    --bg:#0b0b0f;
+    --panel:#121218;
+    --panel-2:#0f0f15;
+    --text:#e9e9ef;
+    --muted:#9aa0a6;
+    --pink:#ff4da6;
+    --pink-2:#ff7cc3;
+    --green:#1ee1a9;
+    --line:#1f2230;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:system-ui,Segoe UI,Roboto,Arial;
+    background:var(--bg);
+    color:var(--text);
+    display:grid;
+    place-items:center;
+    min-height:100vh;
+    padding:24px;
+    background:
+      radial-gradient(1000px 600px at 85% -10%, rgba(255,77,166,.08), transparent 60%),
+      radial-gradient(800px 500px at -10% 100%, rgba(122,86,255,.06), transparent 60%),
+      var(--bg);
+  }
+  .card{
+    width:min(540px,94vw);
+    background:linear-gradient(180deg,var(--panel),var(--panel-2));
+    border:1px solid #171a24;
+    border-radius:16px;
+    box-shadow:0 30px 80px rgba(0,0,0,.55);
+    overflow:hidden;
+  }
+  .card__header{padding:20px 22px 8px}
+  .title{font-weight:800;letter-spacing:.6px;text-transform:uppercase;font-size:22px;color:white;text-shadow:0 0 12px rgba(255,77,166,.35);}
+  .title .accent{color:var(--pink);}
+  .tabs{display:flex;gap:10px;padding:12px 10px 0 10px;}
+  .tab{flex:0 0 auto;padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:#0e0f14;color:var(--muted);font-weight:600;cursor:pointer;transition:.2s;}
+  .tab.active{background:linear-gradient(180deg,#171827,#12131d);color:#fff;border-color:#2a2e43;}
+  .card__body{padding:14px 18px 22px}
+  .section{border:1px solid var(--line);background:#0e0f14;border-radius:12px;padding:14px;margin:10px 0 14px;}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 8px;border-radius:10px;transition:.15s;}
+  .row.active{background:linear-gradient(180deg,rgba(255,77,166,.10),rgba(255,77,166,.05));border:1px solid rgba(255,77,166,.25);}
+  .label{display:flex;align-items:center;gap:10px;font-weight:700;}
+  .toggle{position:relative;width:46px;height:28px;}
+  .toggle input{display:none;}
+  .track{position:absolute;inset:0;background:#171a24;border:1px solid #23273a;border-radius:999px;transition:.2s;}
+  .thumb{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#2a2f45;transition:.2s;}
+  .toggle input:checked + .track{background:linear-gradient(180deg,var(--pink-2),var(--pink));border-color:transparent;box-shadow:0 0 18px rgba(255,77,166,.35);}
+  .toggle input:checked + .track + .thumb{left:calc(100% - 25px);background:#fff;}
+  .slider-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .value{background:#171a24;padding:4px 10px;border-radius:8px;border:1px solid #23273a;}
+  input[type="range"]{-webkit-appearance:none;width:100%;height:8px;border-radius:8px;outline:none;background:linear-gradient(90deg,var(--pink) 0%,var(--pink) var(--fill,0%),#1a1d2a var(--fill,0%));}
+  input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid var(--pink);}
+  .footer{padding:12px 18px 18px;}
+  .cta{width:100%;border:none;cursor:pointer;padding:16px 18px;border-radius:12px;font-weight:900;letter-spacing:.4px;color:#fff;background:linear-gradient(180deg,#ff7cc3,#ff4da6);box-shadow:0 10px 30px rgba(255,77,166,.35);}
+  .note{text-align:center;color:#9aa0a6;font-size:12px;margin-top:8px;}
+</style>
 </head>
 <body>
-  <div class="fallback" id="fallback">La page est chargée. Si elle reste vide, JavaScript a été bloqué ou a rencontré une erreur.</div>
-
-  <!-- MODAL LOGIN -->
-  <div class="modal" id="loginModal" aria-modal="true" role="dialog">
-    <div class="modal-card">
-      <h2>Seja bem vindo-key</h2>
-      <p>Digite Seu Login:</p>
-      <input id="passwordInput" class="input" type="password" placeholder="Password" autocomplete="current-password">
-      <div id="loginError" style="color:#ff6b6b;min-height:18px;margin-top:8px;font-size:13px"></div>
-      <div class="row">
-        <button class="btn" id="cancelBtn">Cancelar</button>
-        <button class="btn primary" id="loginBtn">Login</button>
+  <div class="card">
+    <div class="card__header">
+      <div class="title">AUXILIO BY <span class="accent">MOHAMED</span></div>
+      <div class="tabs">
+        <div class="tab active">Aimbot</div>
+        <div class="tab">Info</div>
       </div>
-      <p style="opacity:.7;margin-top:10px">Senha padrão: <code>3628363</code></p>
+    </div>
+
+    <div class="card__body">
+      <div class="section">
+        <div class="row" data-row>
+          <div class="label">
+            <label class="toggle">
+              <input type="checkbox" id="auxilio"><span class="track"></span><span class="thumb"></span>
+            </label>
+            <label for="auxilio">Ativar Auxílio</label>
+          </div>
+        </div>
+
+        <div class="row" data-row>
+          <div class="label">
+            <label class="toggle">
+              <input type="checkbox" id="precisionToggle"><span class="track"></span><span class="thumb"></span>
+            </label>
+            <label for="precisionToggle">Ativar Precisão</label>
+          </div>
+        </div>
+
+        <div class="section" id="precisionSection">
+          <div class="slider-head">
+            <span>Precisão</span><span class="value" id="precisionValue">0</span>
+          </div>
+          <input type="range" min="0" max="100" value="0" id="precisionRange" disabled />
+        </div>
+
+        <div class="row" data-row>
+          <div class="label">
+            <label class="toggle">
+              <input type="checkbox" id="head"><span class="track"></span><span class="thumb"></span>
+            </label>
+            <label for="head">Auxilio Head</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <button class="cta" id="injectBtn">INJETAR FUNÇÕES NO JOGO</button>
+      <div class="note" id="stateNote">Todas as opções estão desativadas.</div>
     </div>
   </div>
 
-  <!-- APP -->
-  <div class="container hidden" id="app" aria-live="polite">
-    <h3>AUXÍLIO SLEEPFZ IOS</h3>
+<script>
+document.querySelectorAll('[data-row]').forEach(row=>{
+  const input=row.querySelector('input');
+  input.addEventListener('change',()=>row.classList.toggle('active',input.checked));
+});
+const togglePrecision=document.getElementById('precisionToggle');
+const precisionRange=document.getElementById('precisionRange');
+const precisionValue=document.getElementById('precisionValue');
+togglePrecision.addEventListener('change',()=>{
+  precisionRange.disabled=!togglePrecision.checked;
+});
+precisionRange.addEventListener('input',()=>{
+  precisionValue.textContent=precisionRange.value;
+  precisionRange.style.setProperty('--fill',(precisionRange.value/100*100)+'%');
+});
+precisionRange.dispatchEvent(new Event('input'));
 
-    <div class="tabs" role="tablist">
-      <div class="tab active" data-target="aimlock" role="tab" aria-selected="true" tabindex="0">Opções de Auxílio</div>
-      <div class="tab" data-target="info" role="tab" aria-selected="false" tabindex="0">no recoil</div>
-    </div>
+// --- ouvrir Free Fire ou Free Fire Max ---
+document.getElementById('injectBtn').addEventListener('click', openGamePrompt);
 
-    <div id="aimlock" class="content active" role="tabpanel">
-      <div class="option">
-        <input type="checkbox" id="auxilio">
-        <label for="auxilio">no recoil</label>
+async function openGamePrompt() {
+  const choice = await showChooser();
+  if (!choice) return;
+  const link = getDeepLink(choice);
+  window.location.href = link;
+}
+
+function showChooser() {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.inset = '0';
+    overlay.style.background = 'rgba(0,0,0,.6)';
+    overlay.style.display = 'grid';
+    overlay.style.placeItems = 'center';
+    overlay.style.zIndex = '9999';
+
+    const box = document.createElement('div');
+    box.style.background = '#11141b';
+    box.style.border = '1px solid #23273a';
+    box.style.borderRadius = '14px';
+    box.style.padding = '18px';
+    box.style.color = '#fff';
+    box.style.textAlign = 'center';
+    box.innerHTML = `
+      <h3 style="margin-top:0;color:#ff4da6">Abrir jogo</h3>
+      <p style="color:#9aa0a6">Escolha a versão do Free Fire:</p>
+      <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;justify-content:center">
+        <button id="ff"  style="padding:10px 18px;border:none;border-radius:10px;background:#ff4da6;color:#fff;font-weight:700;cursor:pointer;">Free Fire</button>
+        <button id="ffm" style="padding:10px 18px;border:none;border-radius:10px;background:#7a56ff;color:#fff;font-weight:700;cursor:pointer;">Free Fire Max</button>
       </div>
-      <div class="option">
-        <input type="checkbox" id="fov">
-        <label for="fov">Headtrick</label>
-      </div>
+      <p style="color:#9aa0a6;font-size:12px;margin-top:14px">Se nada acontecer, o navegador pode bloquear o redirecionamento.</p>
+    `;
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+    const close = (v)=>{document.body.removeChild(overlay);resolve(v);}
+    box.querySelector('#ff').onclick = ()=>close('ff');
+    box.querySelector('#ffm').onclick= ()=>close('ffm');
+  });
+}
 
-      <div class="slider-container">
-        <input type="range" id="fovRange" class="slider" min="1" max="10" value="5">
-        <span id="fovValue">Fov 5</span>
-      </div>
+function getDeepLink(choice) {
+  const ua = navigator.userAgent;
+  const isiOS = /iPhone|iPad|iPod/i.test(ua);
+  const isAndroid = /Android/i.test(ua);
 
-      <select class="dropdown" id="auxilioType" aria-label="Tipo de auxílio">
-        <option>Auxilio 50%</option>
-        <option>Auxilio 70%</option>
-        <option>Auxilio sleepfz</option>
-      </select>
-
-      <h4>Tipo de Auxílio de mira:</h4>
-      <div class="radio-container" id="aimlockGroup">
-        <label class="radio-item active"><input type="radio" name="aimlockType" id="atirar" checked> Ao Atirar</label>
-        <label class="radio-item"><input type="radio" name="aimlockType" id="olhar"> Ao Olhar boneco</label>
-      </div>
-
-      <button class="button" id="injectButton" type="button">INJETAR AO JOGO?</button>
-    </div>
-
-    <div id="info" class="content" role="tabpanel" aria-hidden="true">
-      <p><b>Modelo:</b> iPhone</p>
-      <p><b>Developer:</b> @speed.nss</p>
-      <button class="button" id="openApp" type="button">Abrir Free Fire Normal</button>
-      <p id="msg" style="opacity:.8;text-align:center;margin-top:6px">Toque numa opção para ativá-la. Em seguida, clique em "Abrir Free Fire".</p>
-    </div>
-  </div>
-
-  <noscript>
-    <div class="fallback">JavaScript est désactivé : activez-le pour utiliser cette page.</div>
-  </noscript>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const log = (...a)=>{ try{ console.log('[SAFE]',...a)}catch(e){} };
-      const showError = (msg)=>{ const f=document.getElementById('fallback'); if(f) f.textContent = msg; };
-
-      try {
-        // Elements (tous optionnels => on garde des guards)
-        const app = document.getElementById("app");
-        const loginModal = document.getElementById("loginModal");
-        const loginBtn = document.getElementById("loginBtn");
-        const cancelBtn = document.getElementById("cancelBtn");
-        const passInput = document.getElementById("passwordInput");
-        const loginError = document.getElementById("loginError");
-        const tabs = Array.from(document.querySelectorAll(".tab"));
-        const panels = Array.from(document.querySelectorAll(".content"));
-        const fovRange = document.getElementById("fovRange");
-        const fovValue = document.getElementById("fovValue");
-        const radioGroup = document.getElementById("aimlockGroup");
-        const injectButton = document.getElementById("injectButton");
-        const openAppBtn = document.getElementById("openApp");
-        const msg = document.getElementById("msg");
-
-        // Affiche “JS OK”
-        const fallback = document.getElementById('fallback');
-        if (fallback) fallback.textContent = 'Interface chargée.';
-
-        // ===== Login =====
-        const PASSWORD = "3628363";
-        function doLogin(){
-          const pwd = (passInput && passInput.value || "").trim();
-          if (pwd === PASSWORD) {
-            loginModal && loginModal.classList.add("hidden");
-            app && app.classList.remove("hidden");
-            app && app.focus();
-          } else {
-            if (loginError) loginError.textContent = "Senha incorreta!";
-          }
-        }
-        loginBtn && loginBtn.addEventListener("click", doLogin);
-        passInput && passInput.addEventListener("keydown", e=>{ if(e.key==="Enter") doLogin(); });
-        cancelBtn && cancelBtn.addEventListener("click", ()=>{
-          if (passInput) passInput.value = "";
-          if (loginError) loginError.textContent = "";
-          passInput && passInput.focus();
-        });
-
-        // ===== Tabs =====
-        function switchTab(activeTab){
-          tabs.forEach(t=>{
-            const isActive = t===activeTab;
-            t.classList.toggle("active", isActive);
-            t.setAttribute("aria-selected", isActive ? "true":"false");
-          });
-          const targetId = activeTab.dataset.target;
-          panels.forEach(p=>{
-            const on = p.id === targetId;
-            p.classList.toggle("active", on);
-            p.setAttribute("aria-hidden", on ? "false":"true");
-          });
-        }
-        tabs.forEach(tab=>{
-          tab.addEventListener("click", ()=>switchTab(tab));
-          tab.addEventListener("keydown", e=>{
-            if(e.key==="Enter" || e.key===" ") { e.preventDefault(); switchTab(tab); }
-          });
-        });
-
-        // ===== Slider =====
-        fovRange && fovRange.addEventListener("input", function(){
-          fovValue && (fovValue.textContent = "Fov " + this.value);
-        });
-
-        // ===== Radios =====
-        radioGroup && radioGroup.addEventListener("change", ()=>{
-          const items = Array.from(radioGroup.querySelectorAll(".radio-item"));
-          items.forEach(lbl=>lbl.classList.remove("active"));
-          const checked = radioGroup.querySelector('input[type="radio"]:checked');
-          if (checked) checked.closest(".radio-item").classList.add("active");
-        });
-
-        // ===== Détection plateforme =====
-        function isAndroid(){ return /Android/i.test(navigator.userAgent); }
-        function isIOS(){ return /iPhone|iPad|iPod/i.test(navigator.userAgent); }
-
-        // ===== URLs propres (PAS de guillemets courbes, PAS de caractères invisibles) =====
-        const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.dts.freefireth';
-        const PLAY_URL_MAX = 'https://play.google.com/store/apps/details?id=com.dts.freefiremax';
-        const IOS_URL  = 'https://apps.apple.com/app/id1300146617';
-
-        function openAndroid(){
-          // intent:// propre et valide
-          const intents = [
-            'intent://launch/#Intent;scheme=freefire;package=com.dts.freefireth;S.browser_fallback_url=' +
-              encodeURIComponent(PLAY_URL) + ';end',
-            'intent://launch/#Intent;scheme=freefire;package=com.dts.freefiremax;S.browser_fallback_url=' +
-              encodeURIComponent(PLAY_URL_MAX) + ';end'
-          ];
-          let done=false;
-          const t=setTimeout(()=>{ if(!done) window.location.href = PLAY_URL; }, 1200);
-          window.location.href = intents[0];
-          setTimeout(()=>{ if(!done) window.location.href = intents[1]; }, 120);
-          setTimeout(()=>{ done=true; clearTimeout(t); }, 220);
-        }
-
-        function openIOS(){
-          const schemes = ['freefire://','garena://freefire'];
-          let done=false;
-          const t=setTimeout(()=>{ if(!done) window.location.href = IOS_URL; }, 1200);
-          (async()=>{
-            for (const s of schemes){
-              const ifr=document.createElement('iframe');
-              ifr.style.display='none'; ifr.src=s; document.body.appendChild(ifr);
-              await new Promise(r=>setTimeout(r,150));
-              try{ document.body.removeChild(ifr);}catch(e){}
-            }
-            done=true; clearTimeout(t);
-          })();
-        }
-
-        function openFreeFire(){
-          if (isAndroid()) openAndroid();
-          else if (isIOS()) openIOS();
-          else { window.open(PLAY_URL,'_blank'); msg && (msg.textContent = 'Ouverture de la page Play Store...'); }
-        }
-
-        // ===== Boutons =====
-        function ativarFuncoes(){
-          if (!injectButton) return;
-          injectButton.textContent = "INJETANDO...";
-          injectButton.disabled = true;
-
-          // Tentative d’ouverture d’app (clic utilisateur présent)
-          openFreeFire();
-
-          setTimeout(()=>{
-            injectButton.textContent = "INJETADO!";
-            setTimeout(()=>{
-              injectButton.textContent = "INJETAR AO JOGO?";
-              injectButton.disabled = false;
-            }, 2000);
-          }, 3000);
-        }
-        injectButton && injectButton.addEventListener("click", ativarFuncoes);
-        openAppBtn && openAppBtn.addEventListener("click", openFreeFire);
-
-        log('Ready.');
-      } catch (err) {
-        console.error(err);
-        showError('Erreur JS : ' + (err && err.message ? err.message : err));
-      }
-    });
-  </script>
+  if (choice==='ff') {
+    if (isiOS) return 'freefire://';
+    if (isAndroid) return 'intent://freefire/#Intent;scheme=freefire;package=com.dts.freefireth;end';
+    return 'https://play.google.com/store/apps/details?id=com.dts.freefireth';
+  }
+  if (choice==='ffm') {
+    if (isiOS) return 'freefiremax://';
+    if (isAndroid) return 'intent://freefiremax/#Intent;scheme=freefiremax;package=com.dts.freefiremax;end';
+    return 'https://play.google.com/store/apps/details?id=com.dts.freefiremax';
+  }
+  return '#';
+}
+</script>
 </body>
 </html>
