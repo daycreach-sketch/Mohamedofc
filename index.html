@@ -1,202 +1,368 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AUXILIO BY MOHAMED</title>
-<style>
-  :root{
-    --bg:#0b0b0f;
-    --panel:#121218;
-    --panel-2:#0f0f15;
-    --text:#e9e9ef;
-    --muted:#9aa0a6;
-    --pink:#ff4da6;
-    --pink-2:#ff7cc3;
-    --green:#1ee1a9;
-    --line:#1f2230;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:system-ui,Segoe UI,Roboto,Arial;
-    background:var(--bg);
-    color:var(--text);
-    display:grid;
-    place-items:center;
-    min-height:100vh;
-    padding:24px;
-    background:
-      radial-gradient(1000px 600px at 85% -10%, rgba(255,77,166,.08), transparent 60%),
-      radial-gradient(800px 500px at -10% 100%, rgba(122,86,255,.06), transparent 60%),
-      var(--bg);
-  }
-  .card{
-    width:min(540px,94vw);
-    background:linear-gradient(180deg,var(--panel),var(--panel-2));
-    border:1px solid #171a24;
-    border-radius:16px;
-    box-shadow:0 30px 80px rgba(0,0,0,.55);
-    overflow:hidden;
-  }
-  .card__header{padding:20px 22px 8px}
-  .title{font-weight:800;letter-spacing:.6px;text-transform:uppercase;font-size:22px;color:white;text-shadow:0 0 12px rgba(255,77,166,.35);}
-  .title .accent{color:var(--pink);}
-  .tabs{display:flex;gap:10px;padding:12px 10px 0 10px;}
-  .tab{flex:0 0 auto;padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:#0e0f14;color:var(--muted);font-weight:600;cursor:pointer;transition:.2s;}
-  .tab.active{background:linear-gradient(180deg,#171827,#12131d);color:#fff;border-color:#2a2e43;}
-  .card__body{padding:14px 18px 22px}
-  .section{border:1px solid var(--line);background:#0e0f14;border-radius:12px;padding:14px;margin:10px 0 14px;}
-  .row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 8px;border-radius:10px;transition:.15s;}
-  .row.active{background:linear-gradient(180deg,rgba(255,77,166,.10),rgba(255,77,166,.05));border:1px solid rgba(255,77,166,.25);}
-  .label{display:flex;align-items:center;gap:10px;font-weight:700;}
-  .toggle{position:relative;width:46px;height:28px;}
-  .toggle input{display:none;}
-  .track{position:absolute;inset:0;background:#171a24;border:1px solid #23273a;border-radius:999px;transition:.2s;}
-  .thumb{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#2a2f45;transition:.2s;}
-  .toggle input:checked + .track{background:linear-gradient(180deg,var(--pink-2),var(--pink));border-color:transparent;box-shadow:0 0 18px rgba(255,77,166,.35);}
-  .toggle input:checked + .track + .thumb{left:calc(100% - 25px);background:#fff;}
-  .slider-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-  .value{background:#171a24;padding:4px 10px;border-radius:8px;border:1px solid #23273a;}
-  input[type="range"]{-webkit-appearance:none;width:100%;height:8px;border-radius:8px;outline:none;background:linear-gradient(90deg,var(--pink) 0%,var(--pink) var(--fill,0%),#1a1d2a var(--fill,0%));}
-  input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid var(--pink);}
-  .footer{padding:12px 18px 18px;}
-  .cta{width:100%;border:none;cursor:pointer;padding:16px 18px;border-radius:12px;font-weight:900;letter-spacing:.4px;color:#fff;background:linear-gradient(180deg,#ff7cc3,#ff4da6);box-shadow:0 10px 30px rgba(255,77,166,.35);}
-  .note{text-align:center;color:#9aa0a6;font-size:12px;margin-top:8px;}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AUXILIO BY MOHAMED</title>
+  <style>
+    :root{
+      --bg:#0c0c12;
+      --panel:#141420;
+      --panel-2:#17172a;
+      --text:#e7e8ef;
+      --muted:#8c8fa1;
+      --primary:#ff4fa3;
+      --primary-2:#ff7bc0;
+      --outline:#24243b;
+      --success:#16c79a;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #28142a 0%, transparent 60%),
+        radial-gradient(1200px 600px at 110% 0%, #142338 0%, transparent 60%),
+        var(--bg);
+    }
+    .wrap{
+      max-width:720px;
+      margin:32px auto;
+      padding:0 16px 40px;
+    }
+    .card{
+      background:linear-gradient(180deg,var(--panel) 0%, var(--panel-2) 100%);
+      border:1px solid var(--outline);
+      border-radius:20px;
+      box-shadow:
+        0 10px 30px rgba(0,0,0,.45),
+        inset 0 0 0 1px rgba(255,255,255,.02);
+      overflow:hidden;
+    }
+    .header{
+      padding:28px 24px 8px;
+    }
+    .title{
+      font-weight:800;
+      font-size:28px;
+      letter-spacing:.5px;
+    }
+    .title .accent{
+      color:var(--primary);
+      text-shadow:0 0 18px rgba(255,79,163,.55);
+    }
+    .tabs{
+      display:flex; gap:12px;
+      padding:16px 20px 22px;
+    }
+    .tab{
+      flex:0 0 auto;
+      padding:10px 18px;
+      border-radius:14px;
+      border:1px solid var(--outline);
+      background:#121222;
+      color:var(--text);
+      font-weight:700;
+      opacity:.9;
+      cursor:pointer;
+      transition:.2s;
+    }
+    .tab.active{
+      background:#171733;
+      outline:2px solid rgba(255,79,163,.25);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+
+    .section{
+      padding:16px 20px 22px;
+      border-top:1px solid var(--outline);
+    }
+    .group{
+      background:#101022;
+      border:1px solid var(--outline);
+      border-radius:16px;
+      padding:18px;
+      margin-bottom:18px;
+    }
+
+    /* Toggle */
+    .row{
+      display:flex; align-items:center;
+      gap:14px; padding:12px 6px;
+    }
+    .label{
+      font-size:18px; font-weight:700;
+    }
+    .muted{ color:var(--muted); font-size:14px }
+
+    .toggle{
+      --size:44px;
+      width:64px; height:36px;
+      background:#0d0d18;
+      border:1px solid var(--outline);
+      border-radius:999px;
+      position:relative;
+      cursor:pointer;
+      transition:.2s;
+    }
+    .toggle::after{
+      content:"";
+      position:absolute; top:50%; left:4px;
+      width:28px; height:28px; border-radius:50%;
+      background:linear-gradient(180deg,#1c1c2e,#0e0e18);
+      box-shadow:0 2px 6px rgba(0,0,0,.5), 0 0 0 2px #0004;
+      transform:translateY(-50%);
+      transition:.22s cubic-bezier(.2,.8,.2,1);
+    }
+    .toggle.active{
+      background:linear-gradient(90deg, var(--primary) 0%, var(--primary-2) 100%);
+      border-color:transparent;
+      box-shadow:0 0 16px rgba(255,79,163,.45) inset;
+    }
+    .toggle.active::after{ left:32px; background:#fff }
+
+    /* Slider */
+    .slider-wrap{ padding:10px 8px 6px }
+    .slider-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:6px }
+    .badge{
+      min-width:44px; text-align:center;
+      background:#0f0f1c; border:1px solid var(--outline);
+      padding:6px 10px; border-radius:10px; font-weight:800;
+    }
+    input[type="range"]{
+      width:100%; height:6px; border-radius:6px; appearance:none;
+      background:linear-gradient(90deg, var(--primary), var(--primary-2));
+      outline:none; opacity:.9;
+    }
+    input[type="range"]::-webkit-slider-thumb{
+      -webkit-appearance:none; appearance:none;
+      width:24px; height:24px; border-radius:50%;
+      background:#ffd9ea; border:3px solid #ff5fb0;
+      box-shadow:0 0 0 6px rgba(255,79,163,.15);
+      cursor:pointer;
+    }
+
+    /* Radio */
+    .radios{ display:flex; gap:26px; padding:8px 6px 2px }
+    .radio{
+      display:flex; align-items:center; gap:10px; cursor:pointer; user-select:none;
+      padding:6px 10px; border-radius:10px;
+    }
+    .dot{
+      width:18px; height:18px; border-radius:50%;
+      border:2px solid var(--muted); position:relative;
+    }
+    .radio.active .dot{ border-color:var(--primary) }
+    .radio.active .dot::after{
+      content:""; position:absolute; inset:3px; border-radius:50%;
+      background:var(--primary);
+      box-shadow:0 0 10px rgba(255,79,163,.55);
+    }
+
+    /* Button */
+    .cta{
+      display:block; width:100%;
+      margin:10px 0 6px; padding:18px 20px;
+      border:none; border-radius:16px;
+      font-size:16px; font-weight:900; letter-spacing:.4px;
+      color:#17121d; background:linear-gradient(90deg, var(--primary), var(--primary-2));
+      box-shadow:0 10px 28px rgba(255,79,163,.25);
+      cursor:pointer; transition:.15s transform ease;
+    }
+    .cta:active{ transform:translateY(1px) }
+
+    .foot{ text-align:center; color:var(--muted); padding:4px 12px 14px }
+
+    /* Modal */
+    .modal{
+      position:fixed; inset:0; background:rgba(3,3,8,.6);
+      display:none; align-items:center; justify-content:center; z-index:30;
+      padding:20px;
+    }
+    .modal.show{ display:flex }
+    .modal-card{
+      width:min(480px,100%); background:#0f0f1f; border:1px solid var(--outline);
+      border-radius:16px; padding:18px;
+      box-shadow:0 20px 60px rgba(0,0,0,.55);
+    }
+    .modal h3{ margin:6px 2px 14px; font-size:18px }
+    .modal .btns{ display:flex; gap:12px; flex-wrap:wrap }
+    .btn{
+      flex:1 1 auto; padding:12px; border-radius:12px; font-weight:800; border:1px solid var(--outline);
+      background:#151533; color:var(--text); cursor:pointer;
+    }
+    .btn.primary{ background:linear-gradient(90deg, var(--primary), var(--primary-2)); color:#1a1120; border:none }
+  </style>
 </head>
 <body>
-  <div class="card">
-    <div class="card__header">
-      <div class="title">AUXILIO BY <span class="accent">MOHAMED</span></div>
+  <div class="wrap">
+    <div class="card">
+      <div class="header">
+        <div class="title">AUXILIO BY <span class="accent">MOHAMED</span></div>
+      </div>
+
       <div class="tabs">
-        <div class="tab active">Aimbot</div>
-        <div class="tab">Info</div>
+        <button class="tab active" data-tab="aimbot">Aimbot</button>
+        <button class="tab" data-tab="info">Info</button>
       </div>
-    </div>
 
-    <div class="card__body">
-      <div class="section">
-        <div class="row" data-row>
-          <div class="label">
-            <label class="toggle">
-              <input type="checkbox" id="auxilio"><span class="track"></span><span class="thumb"></span>
-            </label>
-            <label for="auxilio">Ativar Auxílio</label>
+      <!-- AIMBOT TAB -->
+      <div class="section" id="tab-aimbot">
+        <div class="group">
+          <div class="row">
+            <div class="toggle" data-toggle="auxilio"></div>
+            <div class="label">Ativar Auxílio</div>
+          </div>
+
+          <div class="row">
+            <div class="toggle" data-toggle="precisao"></div>
+            <div class="label">Ativar Precisão</div>
+          </div>
+
+          <div class="slider-wrap">
+            <div class="slider-head">
+              <div class="label" style="font-weight:800">Precisão</div>
+              <div class="badge" id="precisaoValue">0</div>
+            </div>
+            <input id="precisaoRange" type="range" min="0" max="100" value="0" />
+          </div>
+
+          <div class="row">
+            <div class="toggle" data-toggle="head"></div>
+            <div class="label">Auxilio Head</div>
+          </div>
+
+          <div class="row">
+            <div class="toggle" data-toggle="recoil"></div>
+            <div class="label">Auxilio Recoil</div>
+          </div>
+
+          <div class="row">
+            <div class="toggle" data-toggle="sensi"></div>
+            <div class="label">Auxilio Sensi</div>
+          </div>
+
+          <div class="group" style="margin:12px -18px -6px; padding:14px 18px 10px; border-top:1px solid var(--outline); border-radius:0 0 16px 16px;">
+            <div class="muted" style="margin:4px 6px 8px; font-weight:700">Tipo de Aimbot:</div>
+            <div class="radios" id="aimType">
+              <div class="radio active" data-value="shoot">
+                <div class="dot"></div><div class="label" style="font-weight:700">Ao Atirar</div>
+              </div>
+              <div class="radio" data-value="look">
+                <div class="dot"></div><div class="label" style="font-weight:700">Ao Olhar</div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="row" data-row>
-          <div class="label">
-            <label class="toggle">
-              <input type="checkbox" id="precisionToggle"><span class="track"></span><span class="thumb"></span>
-            </label>
-            <label for="precisionToggle">Ativar Precisão</label>
-          </div>
-        </div>
+        <button class="cta" id="injectBtn">INJETAR FUNÇÕES NO JOGO</button>
+        <div class="foot" id="status">Todas as opções estão desativadas.</div>
+      </div>
 
-        <div class="section" id="precisionSection">
-          <div class="slider-head">
-            <span>Precisão</span><span class="value" id="precisionValue">0</span>
-          </div>
-          <input type="range" min="0" max="100" value="0" id="precisionRange" disabled />
-        </div>
-
-        <div class="row" data-row>
-          <div class="label">
-            <label class="toggle">
-              <input type="checkbox" id="head"><span class="track"></span><span class="thumb"></span>
-            </label>
-            <label for="head">Auxilio Head</label>
+      <!-- INFO TAB -->
+      <div class="section" id="tab-info" style="display:none">
+        <div class="group">
+          <div class="label" style="margin-bottom:6px">Info</div>
+          <div class="muted">
+            Interface somente visual. Nenhuma modificação no jogo é realizada por esta página.
+            O botão “Injetar” apenas tenta abrir o app via deep-link (<code>freefire://</code> ou <code>freefiremax://</code>).
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="footer">
-      <button class="cta" id="injectBtn">INJETAR FUNÇÕES NO JOGO</button>
-      <div class="note" id="stateNote">Todas as opções estão desativadas.</div>
     </div>
   </div>
 
-<script>
-document.querySelectorAll('[data-row]').forEach(row=>{
-  const input=row.querySelector('input');
-  input.addEventListener('change',()=>row.classList.toggle('active',input.checked));
-});
-const togglePrecision=document.getElementById('precisionToggle');
-const precisionRange=document.getElementById('precisionRange');
-const precisionValue=document.getElementById('precisionValue');
-togglePrecision.addEventListener('change',()=>{
-  precisionRange.disabled=!togglePrecision.checked;
-});
-precisionRange.addEventListener('input',()=>{
-  precisionValue.textContent=precisionRange.value;
-  precisionRange.style.setProperty('--fill',(precisionRange.value/100*100)+'%');
-});
-precisionRange.dispatchEvent(new Event('input'));
-
-// --- ouvrir Free Fire ou Free Fire Max ---
-document.getElementById('injectBtn').addEventListener('click', openGamePrompt);
-
-async function openGamePrompt() {
-  const choice = await showChooser();
-  if (!choice) return;
-  const link = getDeepLink(choice);
-  window.location.href = link;
-}
-
-function showChooser() {
-  return new Promise((resolve) => {
-    const overlay = document.createElement('div');
-    overlay.style.position = 'fixed';
-    overlay.style.inset = '0';
-    overlay.style.background = 'rgba(0,0,0,.6)';
-    overlay.style.display = 'grid';
-    overlay.style.placeItems = 'center';
-    overlay.style.zIndex = '9999';
-
-    const box = document.createElement('div');
-    box.style.background = '#11141b';
-    box.style.border = '1px solid #23273a';
-    box.style.borderRadius = '14px';
-    box.style.padding = '18px';
-    box.style.color = '#fff';
-    box.style.textAlign = 'center';
-    box.innerHTML = `
-      <h3 style="margin-top:0;color:#ff4da6">Abrir jogo</h3>
-      <p style="color:#9aa0a6">Escolha a versão do Free Fire:</p>
-      <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;justify-content:center">
-        <button id="ff"  style="padding:10px 18px;border:none;border-radius:10px;background:#ff4da6;color:#fff;font-weight:700;cursor:pointer;">Free Fire</button>
-        <button id="ffm" style="padding:10px 18px;border:none;border-radius:10px;background:#7a56ff;color:#fff;font-weight:700;cursor:pointer;">Free Fire Max</button>
+  <!-- Modal de escolha -->
+  <div class="modal" id="gamePicker">
+    <div class="modal-card">
+      <h3>Escolher versão para abrir:</h3>
+      <div class="btns">
+        <button class="btn primary" data-game="freefire">Free Fire</button>
+        <button class="btn primary" data-game="freefiremax">Free Fire Max</button>
+        <button class="btn" data-close>Cancelar</button>
       </div>
-      <p style="color:#9aa0a6;font-size:12px;margin-top:14px">Se nada acontecer, o navegador pode bloquear o redirecionamento.</p>
-    `;
-    overlay.appendChild(box);
-    document.body.appendChild(overlay);
-    const close = (v)=>{document.body.removeChild(overlay);resolve(v);}
-    box.querySelector('#ff').onclick = ()=>close('ff');
-    box.querySelector('#ffm').onclick= ()=>close('ffm');
-  });
-}
+    </div>
+  </div>
 
-function getDeepLink(choice) {
-  const ua = navigator.userAgent;
-  const isiOS = /iPhone|iPad|iPod/i.test(ua);
-  const isAndroid = /Android/i.test(ua);
+  <script>
+    // Tab logic
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(t => t.addEventListener('click', () => {
+      tabs.forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      const id = t.dataset.tab;
+      document.getElementById('tab-aimbot').style.display = id === 'aimbot' ? '' : 'none';
+      document.getElementById('tab-info').style.display   = id === 'info'   ? '' : 'none';
+    }));
 
-  if (choice==='ff') {
-    if (isiOS) return 'freefire://';
-    if (isAndroid) return 'intent://freefire/#Intent;scheme=freefire;package=com.dts.freefireth;end';
-    return 'https://play.google.com/store/apps/details?id=com.dts.freefireth';
-  }
-  if (choice==='ffm') {
-    if (isiOS) return 'freefiremax://';
-    if (isAndroid) return 'intent://freefiremax/#Intent;scheme=freefiremax;package=com.dts.freefiremax;end';
-    return 'https://play.google.com/store/apps/details?id=com.dts.freefiremax';
-  }
-  return '#';
-}
-</script>
+    // Toggles state
+    const state = {
+      auxilio:false,
+      precisaoAtiva:false,
+      head:false,
+      recoil:false,
+      sensi:false,
+      aimType:'shoot',
+      precisao:0
+    };
+
+    const statusEl = document.getElementById('status');
+
+    function refreshStatus(){
+      const active =
+        state.auxilio || state.precisaoAtiva || state.head || state.recoil || state.sensi || state.precisao>0;
+      statusEl.textContent = active
+        ? "Algumas opções estão ativas."
+        : "Todas as opções estão desativadas.";
+    }
+
+    document.querySelectorAll('.toggle').forEach(tg=>{
+      tg.addEventListener('click', ()=>{
+        tg.classList.toggle('active');
+        const key = tg.dataset.toggle;
+        state[key] = tg.classList.contains('active');
+        refreshStatus();
+      });
+    });
+
+    // Slider Precisão (0 - 100)
+    const range = document.getElementById('precisaoRange');
+    const badge = document.getElementById('precisaoValue');
+    const updateRange = () => { state.precisao = +range.value; badge.textContent = range.value; refreshStatus(); };
+    range.addEventListener('input', updateRange);
+    updateRange();
+
+    // Radio Aimbot type
+    const radios = document.querySelectorAll('#aimType .radio');
+    radios.forEach(r=>{
+      r.addEventListener('click', ()=>{
+        radios.forEach(x=>x.classList.remove('active'));
+        r.classList.add('active');
+        state.aimType = r.dataset.value;
+      });
+    });
+
+    // Inject: choose FF or FF Max, then try to open
+    const picker = document.getElementById('gamePicker');
+    document.getElementById('injectBtn').addEventListener('click', ()=>{
+      picker.classList.add('show');
+    });
+
+    picker.addEventListener('click', (e)=>{
+      if(e.target.hasAttribute('data-close')) picker.classList.remove('show');
+      if(e.target.dataset.game){
+        picker.classList.remove('show');
+        const scheme = e.target.dataset.game === 'freefire' ? 'freefire://' : 'freefiremax://';
+        // tentativa de abrir o app
+        window.location.href = scheme;
+        // fallback de informação (aparece se o esquema não estiver instalado)
+        setTimeout(()=> {
+          alert("Se o jogo não abriu, verifique se o app está instalado e se o deep-link ("+scheme+") é suportado neste dispositivo/navegador.");
+        }, 800);
+      }
+    });
+  </script>
 </body>
 </html>
