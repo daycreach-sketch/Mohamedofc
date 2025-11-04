@@ -1,338 +1,212 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="fr" data-theme="dark">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>userzzq - options only</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Momo Shoop</title>
+<link rel="icon" href="https://i.postimg.cc/qMmvgMW8/4675433B-225F-4056-BD38-54B07A1923BA.png">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+:root{
+  --bg:#0f1115; --surface:#141825; --line:#22293a;
+  --text:#e9edf6; --muted:#9aa4af; --accent:#7dd3fc; --accent-ink:#0b0f17;
+}
+html[data-theme="light"]{
+  --bg:#f7f8fb; --surface:#ffffff; --line:#e7e9f0;
+  --text:#0e1623; --muted:#6b7280; --accent:#2563eb; --accent-ink:#ffffff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Arial}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1100px,92%);margin-inline:auto}
 
-  :root{
-    --bg:#000;
-    --card:#1c1b24;
-    --neon:#ffff00;
-    --neon2:#ffff33;
-  }
+/* Header */
+.header{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{width:30px;height:30px;border-radius:8px;border:1px solid var(--line)}
+.brand span{font-weight:800}
+.brand b{color:var(--accent)}
+.header-actions{display:flex;align-items:center;gap:10px}
+.flag{width:30px;height:20px;border-radius:3px;object-fit:cover;border:1px solid var(--line)}
+.btn{padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--text);cursor:pointer;font-weight:700}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:transparent}
+.btn.badge span{background:var(--bg);color:var(--text);padding:2px 8px;border-radius:999px;margin-left:6px;font-weight:800}
 
-  *{box-sizing:border-box}
-  body {
-    background-color: var(--bg);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-family: 'Poppins', sans-serif;
-    color: #fff;
-    margin:0;
-    overflow: hidden;
-    position: relative;
-  }
+/* Panneau livraison */
+#shipPanel{display:none;border-bottom:1px solid var(--line);background:var(--surface)}
+#shipPanel ul{margin-top:6px;line-height:1.7}
+#shipPanel li{list-style:none}
 
-  canvas#bgCanvas {
-    position: absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    z-index: -1;
-  }
+/* Grille produits intégrée au fond */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px}
+@media (min-width:900px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{background:transparent;border:none;border-radius:12px;overflow:hidden;font-size:12px;transition:transform .15s}
+.card:hover{transform:translateY(-2px)}
+.thumb{width:100%;height:150px;object-fit:cover;border-radius:8px;display:block;transition:all .3s}
+.box{padding:6px 2px}
+.brandline{color:var(--muted);font-size:11px}
+.row{display:flex;align-items:center;gap:6px;margin-top:4px}
+.price{margin-left:auto;display:flex;align-items:baseline;gap:3px}
+.price strong{font-size:14px}
+.price small{font-size:10px;color:var(--muted)}
+.title{margin-top:3px;font-size:12.5px;line-height:1.2}
 
-  .container {
-    background-color: var(--card);
-    border-radius: 20px;
-    padding: 20px;
-    width: 340px;
-    box-shadow: 0 0 40px var(--neon);
-    border: 2px solid var(--neon);
-    position: relative;
-    z-index: 1;
-  }
-
-  .title {
-    text-align: center;
-    font-weight: 600;
-    font-size: 20px;
-    color: var(--neon);
-    text-shadow: 0 0 15px var(--neon);
-    margin-bottom: 18px;
-    text-transform: capitalize;
-  }
-
-  .menu { display:flex; justify-content:center; gap:10px; margin-bottom:8px; }
-
-  .btn {
-    background-color: #2c2b35;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 10px 12px;
-    text-align: center;
-    cursor: pointer;
-    font-weight: 500;
-    transition: 0.2s;
-  }
-
-  .btn:hover { background-color: var(--neon); box-shadow: 0 0 12px var(--neon); }
-
-  .options {
-    margin-top: 6px;
-    background-color: #2c2b35;
-    border-radius: 10px;
-    padding: 12px;
-  }
-
-  .option {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 6px 0;
-  }
-
-  .option label { font-size: 14px; }
-
-  input[type="checkbox"] {
-    accent-color: var(--neon);
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-  }
-
-  .slider-container { text-align:center; margin-top:10px; }
-
-  input[type="range"] { width:100%; accent-color: var(--neon); }
-
-  .dropdown {
-    width:100%;
-    background-color:#2c2b35;
-    color:white;
-    border:none;
-    padding:10px;
-    border-radius:10px;
-    margin-top:10px;
-    font-family:'Poppins',sans-serif;
-  }
-
-  .inject {
-    background: linear-gradient(90deg, var(--neon), var(--neon2));
-    border: none;
-    color: white;
-    font-weight: bold;
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    margin-top: 14px;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-
-  .inject:hover { box-shadow: 0 0 20px var(--neon); }
-
-  .modal {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(18,18,24,0.96);
-    border: 2px solid var(--neon);
-    box-shadow: 0 0 30px var(--neon);
-    border-radius: 14px;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 14px;
-    gap:12px;
-    z-index: 2;
-  }
-
-  .modal.show { display:flex; animation: fadeIn 0.18s ease; }
-
-  @keyframes fadeIn { from{opacity:0; transform:scale(.98)} to{opacity:1; transform:scale(1)} }
-
-  .modal .text {
-    font-size:16px;
-    color: var(--neon);
-    line-height:1.5;
-    animation: glow 1.5s infinite alternate;
-  }
-
-  @keyframes glow {
-    0%,100% { text-shadow: 0 0 10px var(--neon), 0 0 20px var(--neon); }
-    50% { text-shadow: 0 0 20px var(--neon2), 0 0 40px var(--neon2); }
-  }
-
-  .close-btn {
-    background-color: var(--neon);
-    border:none;
-    color:white;
-    padding:8px 18px;
-    border-radius:10px;
-    cursor:pointer;
-    font-weight:600;
-  }
-  .close-btn:hover { box-shadow: 0 0 18px var(--neon); }
+/* Page produit */
+.product-page{padding:18px;max-width:900px;margin:auto;display:flex;flex-direction:column;gap:16px}
+.product-image{width:100%;border-radius:12px;overflow:hidden}
+.product-image img{width:100%;height:auto;object-fit:cover}
+.product-info{background:transparent;border-radius:12px;padding:16px}
+.product-info h1{font-size:24px;font-weight:800;margin-bottom:6px}
+.product-info .price{font-size:24px;font-weight:900;margin:8px 0}
+.actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.back-btn{display:inline-block;margin-bottom:10px;padding:8px 12px;background:var(--surface);border:1px solid var(--line);border-radius:8px}
 </style>
 </head>
 <body>
-
-<canvas id="bgCanvas"></canvas>
-
-<div class="container">
-  <div class="title">userzzq</div>
-
-  <div class="menu">
-    <button class="btn" id="funcoesBtn">Funções</button>
-    <button class="btn" id="fpsBtn">FPS</button>
-    <button class="btn" id="infoBtn">Info</button>
+<header class="header">
+  <div class="brand">
+    <img src="https://i.postimg.cc/qMmvgMW8/4675433B-225F-4056-BD38-54B07A1923BA.png" alt="">
+    <span>Momo <b>Shoop</b></span>
   </div>
+  <div class="header-actions">
+    <img class="flag" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Flag_of_Gabon.svg" alt="Gabon">
+    <button class="btn" id="shipBtn">🚚 Livraison ▾</button>
+    <button class="btn" id="themeBtn">🌙</button>
+    <button class="btn primary badge" id="cartBtn">🛒 Panier <span id="cartCount">0</span></button>
+  </div>
+</header>
 
-  <!-- ABA FUNÇÕES -->
-  <div class="options" id="controls">
-    <div class="option"><label>Ativar Aimbot</label><input type="checkbox" class="ctrl"></div>
-    <div class="option"><label>NoRecoil</label><input type="checkbox" class="ctrl"></div>
-    <div class="option"><label>Aumentar Precisão</label><input type="checkbox" class="ctrl"></div>
-    <div class="option"><label>Ignorar Derrubados</label><input type="checkbox" class="ctrl"></div>
-
-    <div class="slider-container">
-      <div style="color:var(--neon);">[ <span id="rangeVal">0</span> ]</div>
-      <input id="precisionRange" class="ctrl" type="range" min="0" max="360" value="0">
+<!-- Panneau Livraison -->
+<div id="shipPanel">
+  <div class="wrap" style="padding:10px 14px;font-size:14px;color:var(--text);">
+    <strong>Frais de livraison :</strong>
+    <ul>
+      <li>Libreville &amp; Owendo : <b>2 000 FCFA</b></li>
+      <li>Akanda : <b>3 000 FCFA</b></li>
+    </ul>
+    <div style="color:var(--muted);font-size:12px;margin-top:6px;">
+      Livraison à domicile – Paiement Mobile Money ou espèces.
     </div>
-
-    <select class="dropdown ctrl" id="aimPart">
-      <option value="corpo">Corpo</option>
-      <option value="pescoco">Pescoço</option>
-      <option value="cabeca">Cabeça</option>
-    </select>
-
-    <button class="inject ctrl" id="injectBtn">INJETAR</button>
-  </div>
-
-  <!-- ABA FPS -->
-  <div class="options" id="fpsOptions" style="display:none;">
-    <div class="option">
-      <label>120 FPS</label>
-      <input type="checkbox" class="ctrl" id="fps120">
-    </div>
-  </div>
-
-  <!-- MODAIS -->
-  <div class="modal info-modal" id="infoModal">
-    <div class="text">Feito para <b>userzzq!</b></div>
-    <button class="close-btn" id="closeInfo">Fechar</button>
-  </div>
-
-  <div class="modal success-modal" id="successModal">
-    <div class="text" id="successText">✅ Injetado com sucesso!</div>
-  </div>
-
-  <div class="modal welcome-modal" id="welcomeModal">
-    <div class="text">👋 Bem-vindo!</div>
   </div>
 </div>
 
+<main class="wrap" id="app"></main>
+
 <script>
-  // --- Fond animé ---
-  const canvas = document.getElementById('bgCanvas');
-  const ctx = canvas.getContext('2d');
-  let w = canvas.width = window.innerWidth;
-  let h = canvas.height = window.innerHeight;
+/* ========= Config ========= */
+const PHONE = "+24102347742";
 
-  window.addEventListener('resize', () => {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-  });
+/* ========= Produits ========= */
+const products = [
+  {id:"p1",title:"T-shirt col rond — coton",brand:"Momo Shoop",price:25000,image:"https://i.postimg.cc/vBJb54bk/IMG-2358.jpg"},
+  {id:"p2",title:"Sweat à capuche unisexe",brand:"Momo Shoop",price:15000,image:"https://i.postimg.cc/NMfskK9t/IMG-2365.jpg"},
+  {id:"p3",title:"Sweat zippé col montant",brand:"Momo Shoop",price:20000,image:"https://i.postimg.cc/dVxpxDxY/IMG-2366.jpg"},
+  {id:"p4",title:"Survêtement camouflage",brand:"Momo Shoop",price:16000,image:"https://i.postimg.cc/RZ4wxT27/IMG-2367.jpg"},
+  {id:"p5",title:"T-shirt léger uni",brand:"Momo Shoop",price:9000,image:"https://i.postimg.cc/ZKZWW5jT/IMG-2371.jpg"},
+  {id:"p6",title:"T-shirt basique coupe droite",brand:"Momo Shoop",price:9000,image:"https://i.postimg.cc/wBtvCyx0/IMG-2370.jpg"},
+  {id:"p7",title:"Hoodie casual",brand:"Momo Shoop",price:12000,image:"https://i.postimg.cc/MHYK71tc/IMG-2369.jpg"},
+  {id:"p8",title:"Jogger uni",brand:"Momo Shoop",price:10000,image:"https://i.postimg.cc/8zYkmpd4/IMG-2368.jpg"},
+];
 
-  const particles = [];
-  const particleCount = 60;
+/* ========= Grille / Fiche ========= */
+function goto(h){location.hash=h}
+function renderList(){
+  const cards = products.map(p=>`
+    <article class="card">
+      <img src="${p.image}" class="thumb" alt="${p.title}" onclick="goto('#/product/${p.id}')">
+      <div class="box">
+        <div class="brandline">${p.brand}</div>
+        <div class="row"><span>— à partir de</span>
+          <span class="price"><strong>${p.price.toLocaleString('fr-FR')}</strong><small>FCFA</small></span>
+        </div>
+        <div class="title">${p.title}</div>
+      </div>
+    </article>`).join('');
+  document.getElementById('app').innerHTML = `<section class="grid">${cards}</section>`;
+}
+function renderProduct(id){
+  const p = products.find(x=>x.id===id);
+  if(!p){goto('#');return;}
+  document.getElementById('app').innerHTML = `
+    <a class="back-btn" href="#">&larr; Retour à la boutique</a>
+    <div class="product-page">
+      <div class="product-image"><img src="${p.image}" alt=""></div>
+      <div class="product-info">
+        <h1>${p.title}</h1>
+        <div class="price">${p.price.toLocaleString('fr-FR')} FCFA</div>
+        <div class="actions">
+          <button class="btn" onclick="addToCart('${p.id}')">Ajouter au panier</button>
+          <button class="btn primary" onclick="checkoutWhatsApp()">Acheter WhatsApp</button>
+        </div>
+      </div>
+    </div>`;
+}
+function router(){const m=location.hash.match(/^#\/product\/(.+)$/);if(m)renderProduct(m[1]);else renderList();}
+window.addEventListener('hashchange',router);
 
-  class Particle {
-    constructor() {
-      this.x = Math.random() * w;
-      this.y = Math.random() * h;
-      this.size = Math.random() * 3 + 1;
-      this.speedX = (Math.random() - 0.5) * 1.2;
-      this.speedY = (Math.random() - 0.5) * 1.2;
-      this.color = `rgba(255,255,0,${Math.random()})`;
-    }
-    update() {
-      this.x += this.speedX;
-      this.y += this.speedY;
-      if(this.x < 0 || this.x > w) this.speedX *= -1;
-      if(this.y < 0 || this.y > h) this.speedY *= -1;
-    }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
-      ctx.fillStyle = this.color;
-      ctx.shadowColor = this.color;
-      ctx.shadowBlur = 10;
-      ctx.fill();
-    }
-  }
+/* ========= Panier ========= */
+const cart = [];
+function addToCart(id){
+  const p = products.find(x=>x.id===id);
+  if(!p) return;
+  const found = cart.find(i=>i.id===id);
+  if(found) found.qty++; else cart.push({...p, qty:1});
+  updateCart();
+  alert(`${p.title} ajouté au panier.`);
+}
+function updateCart(){
+  document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.qty,0);
+}
 
-  for(let i=0;i<particleCount;i++) particles.push(new Particle());
-  function animate(){ ctx.clearRect(0,0,w,h); particles.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(animate); }
-  animate();
+/* ========= Livraison & WhatsApp ========= */
+function getDeliveryFee(city){
+  const v = (city||"").trim().toLowerCase();
+  if(v.includes("akanda")) return 3000;
+  if(v.includes("owendo") || v.includes("libreville")) return 2000;
+  return 0; // si autre ville (tu peux ajuster)
+}
+const f = n => n.toLocaleString('fr-FR');
 
-  // --- Contrôles activés par défaut ---
-  const infoBtn=document.getElementById('infoBtn');
-  const fpsBtn=document.getElementById('fpsBtn');
-  const funcoesBtn=document.getElementById('funcoesBtn');
-  const infoModal=document.getElementById('infoModal');
-  const closeInfo=document.getElementById('closeInfo');
-  const successModal=document.getElementById('successModal');
-  const successText=document.getElementById('successText');
-  const welcomeModal=document.getElementById('welcomeModal');
-  const ctrlElements=document.querySelectorAll('.ctrl');
-  const injectBtn=document.getElementById('injectBtn');
-  const range=document.getElementById('precisionRange');
-  const rangeVal=document.getElementById('rangeVal');
-  const controlsDiv=document.getElementById('controls');
-  const fpsOptionsDiv=document.getElementById('fpsOptions');
+function checkoutWhatsApp(){
+  if(cart.length===0){alert("Votre panier est vide.");return;}
+  const nom = prompt("Votre nom complet ?");
+  const ville = prompt("Ville / Quartier ?");
+  const fee = getDeliveryFee(ville);
+  const sousTotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const total = sousTotal + fee;
 
-  function setControlsEnabled(enabled){
-    ctrlElements.forEach(el=>{
-      if(enabled){ el.removeAttribute('disabled'); el.classList.remove('disabled'); }
-      else { el.setAttribute('disabled',''); el.classList.add('disabled'); }
-    });
-  }
-  setControlsEnabled(true);
+  const lignes = cart.map((i,ix)=>`${ix+1}) ${i.title} — ${f(i.price)} x ${i.qty} = ${f(i.price*i.qty)} FCFA`).join("\n");
 
-  funcoesBtn.addEventListener('click', ()=>{
-    controlsDiv.style.display='block';
-    fpsOptionsDiv.style.display='none';
-  });
+  const msg = `*Nouvelle commande - Momo Shoop*
+${lignes}
+———————————
+*Sous-total :* ${f(sousTotal)} FCFA
+*Livraison (${ville||"-"}):* ${f(fee)} FCFA
+*Total à payer :* ${f(total)} FCFA
 
-  fpsBtn.addEventListener('click', ()=>{
-    controlsDiv.style.display='none';
-    fpsOptionsDiv.style.display='block';
-  });
+👤 *Client :* ${nom||"-"}
+📍 *Ville :* ${ville||"-"}
+💳 *Paiement :* à confirmer
 
-  infoBtn.addEventListener('click', ()=>infoModal.classList.add('show'));
-  closeInfo.addEventListener('click',()=>infoModal.classList.remove('show'));
-  range.addEventListener('input',()=>rangeVal.textContent=range.value);
+Merci de confirmer la disponibilité et la livraison.`;
 
-  injectBtn.addEventListener('click', ()=>{
-    const checkboxes = document.querySelectorAll('.options input[type="checkbox"]');
-    const ativadas = Array.from(checkboxes).filter(cb => cb.checked);
-    successText.textContent = ativadas.length === 0
-      ? '⚠️ Nenhuma opção ativada!'
-      : '✅ Injetado com sucesso!';
-    successModal.classList.add('show');
-    setTimeout(()=>successModal.classList.remove('show'), 2000);
-  });
+  const url = `https://wa.me/${PHONE.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
 
-  successModal.addEventListener('click',()=>successModal.classList.remove('show'));
-  welcomeModal.classList.add('show');
-  setTimeout(()=>welcomeModal.classList.remove('show'),1200);
+/* ========= Header actions ========= */
+document.getElementById('cartBtn').onclick=(e)=>{e.preventDefault();checkoutWhatsApp();}
+document.getElementById('themeBtn').onclick=()=>{
+  const h=document.documentElement;
+  h.dataset.theme=h.dataset.theme==="dark"?"light":"dark";
+};
+document.getElementById('shipBtn').onclick=()=>{
+  const p=document.getElementById('shipPanel');
+  p.style.display=p.style.display==="none"?"block":"none";
+};
+
+/* ========= Init ========= */
+router();
+updateCart();
 </script>
-
 </body>
 </html>
-
-    
-
-    
-    
