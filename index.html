@@ -1,212 +1,207 @@
-<!DOCTYPE html>
-<html lang="fr" data-theme="dark">
+<!doctype html>
+<html lang="fr">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Momo Shoop</title>
-<link rel="icon" href="https://i.postimg.cc/qMmvgMW8/4675433B-225F-4056-BD38-54B07A1923BA.png">
-<style>
-:root{
-  --bg:#0f1115; --surface:#141825; --line:#22293a;
-  --text:#e9edf6; --muted:#9aa4af; --accent:#7dd3fc; --accent-ink:#0b0f17;
-}
-html[data-theme="light"]{
-  --bg:#f7f8fb; --surface:#ffffff; --line:#e7e9f0;
-  --text:#0e1623; --muted:#6b7280; --accent:#2563eb; --accent-ink:#ffffff;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Arial}
-a{color:inherit;text-decoration:none}
-.wrap{width:min(1100px,92%);margin-inline:auto}
-
-/* Header */
-.header{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--line)}
-.brand{display:flex;align-items:center;gap:10px}
-.brand img{width:30px;height:30px;border-radius:8px;border:1px solid var(--line)}
-.brand span{font-weight:800}
-.brand b{color:var(--accent)}
-.header-actions{display:flex;align-items:center;gap:10px}
-.flag{width:30px;height:20px;border-radius:3px;object-fit:cover;border:1px solid var(--line)}
-.btn{padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--text);cursor:pointer;font-weight:700}
-.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:transparent}
-.btn.badge span{background:var(--bg);color:var(--text);padding:2px 8px;border-radius:999px;margin-left:6px;font-weight:800}
-
-/* Panneau livraison */
-#shipPanel{display:none;border-bottom:1px solid var(--line);background:var(--surface)}
-#shipPanel ul{margin-top:6px;line-height:1.7}
-#shipPanel li{list-style:none}
-
-/* Grille produits intégrée au fond */
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px}
-@media (min-width:900px){.grid{grid-template-columns:repeat(4,1fr)}}
-.card{background:transparent;border:none;border-radius:12px;overflow:hidden;font-size:12px;transition:transform .15s}
-.card:hover{transform:translateY(-2px)}
-.thumb{width:100%;height:150px;object-fit:cover;border-radius:8px;display:block;transition:all .3s}
-.box{padding:6px 2px}
-.brandline{color:var(--muted);font-size:11px}
-.row{display:flex;align-items:center;gap:6px;margin-top:4px}
-.price{margin-left:auto;display:flex;align-items:baseline;gap:3px}
-.price strong{font-size:14px}
-.price small{font-size:10px;color:var(--muted)}
-.title{margin-top:3px;font-size:12.5px;line-height:1.2}
-
-/* Page produit */
-.product-page{padding:18px;max-width:900px;margin:auto;display:flex;flex-direction:column;gap:16px}
-.product-image{width:100%;border-radius:12px;overflow:hidden}
-.product-image img{width:100%;height:auto;object-fit:cover}
-.product-info{background:transparent;border-radius:12px;padding:16px}
-.product-info h1{font-size:24px;font-weight:800;margin-bottom:6px}
-.product-info .price{font-size:24px;font-weight:900;margin:8px 0}
-.actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
-.back-btn{display:inline-block;margin-bottom:10px;padding:8px 12px;background:var(--surface);border:1px solid var(--line);border-radius:8px}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Panel – sielzada</title>
+  <style>
+    :root{
+      --bg:#0b0f16;
+      --card:#111827;
+      --muted:#8ea0b8;
+      --text:#e6eefc;
+      --accent:#275bff;
+      --accent-weak:#1c2a52;
+      --switch-on:#3b82f6;
+      --switch-off:#2a3344;
+      --divider:#1b2333;
+      --btn:#2f5bff;
+      --btn-text:#e9f0ff;
+      --radius:18px;
+      --radius-sm:14px;
+      --shadow:0 8px 28px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 50% -200px, #0f1530 0%, var(--bg) 60%);
+      color:var(--text);
+      min-height:100svh;
+      display:grid;
+      place-items:center;
+      padding:24px;
+    }
+    .phone{
+      width:min(420px, 92vw);
+      border-radius:28px;
+      background:linear-gradient(180deg,#0f1830 0%, #0d1322 100%);
+      box-shadow: var(--shadow), inset 0 0 0 1px rgba(255,255,255,.04);
+      padding:18px;
+    }
+    .header{
+      display:flex; align-items:center; gap:14px; padding:6px 6px 14px 6px;
+    }
+    .avatar{
+      width:52px;height:52px;border-radius:50%;
+      background:#0d1528 url('') center/cover no-repeat;
+      border:2px solid rgba(255,255,255,.08);
+      box-shadow:0 0 0 3px rgba(39,91,255,.2);
+    }
+    .title h1{
+      font-size:1.1rem; margin:0 0 4px 0; letter-spacing:.2px;
+    }
+    .title .sub{font-size:.8rem; color:var(--muted)}
+    .tabs{
+      display:flex; gap:10px; padding:8px; background:#0e1526; border-radius:16px; 
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+    }
+    .tab{
+      flex:1; text-align:center; padding:10px 12px; border-radius:12px; font-weight:600;
+      color:var(--muted); background:transparent; border:none; cursor:pointer;
+    }
+    .tab.active{ color:#dbe6ff; background:linear-gradient(180deg,#11214a 0%, #0e1a3a 100%); box-shadow: inset 0 0 0 1px rgba(59,130,246,.35)}
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:14px;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);
+    }
+    .list{ display:grid; gap:12px; margin-top:14px;}
+    .item{
+      display:flex; align-items:center; gap:12px; padding:14px;
+      border-radius:var(--radius-sm); background:#0d1526;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+    }
+    .icon{
+      width:36px;height:36px;border-radius:10px;
+      display:grid;place-items:center;
+      background:linear-gradient(180deg,#162a5e,#0e1f4a);
+      box-shadow:inset 0 0 0 1px rgba(59,130,246,.35);
+      font-size:18px;
+    }
+    .text{flex:1; min-width:0}
+    .text .title{font-weight:700; font-size:.98rem; margin:0 0 4px 0}
+    .text .desc{color:var(--muted); font-size:.86rem; line-height:1.2}
+    .switch{
+      --w:52px; --h:30px;
+      appearance:none; width:var(--w); height:var(--h);
+      background:var(--switch-off); border-radius:999px; position:relative; outline:none;
+      cursor:pointer; transition:.25s background;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    .switch::after{
+      content:""; position:absolute; top:3px; left:3px;
+      width:24px; height:24px; border-radius:50%; background:#fff;
+      box-shadow:0 3px 10px rgba(0,0,0,.4); transition:.25s left;
+    }
+    .switch:checked{ background:var(--switch-on) }
+    .switch:checked::after{ left: calc(var(--w) - 27px) }
+    .cta{
+      margin-top:16px;
+      width:100%; padding:14px 16px; border-radius:14px; border:none; cursor:pointer;
+      background:linear-gradient(180deg,#3b66ff,#254bff);
+      color:var(--btn-text); font-weight:800; letter-spacing:.2px;
+      box-shadow:0 10px 24px rgba(47,91,255,.35), inset 0 0 0 1px rgba(255,255,255,.18);
+    }
+    .footer-note{
+      text-align:center; margin-top:10px; color:var(--muted); font-size:.78rem;
+    }
+  </style>
 </head>
 <body>
-<header class="header">
-  <div class="brand">
-    <img src="https://i.postimg.cc/qMmvgMW8/4675433B-225F-4056-BD38-54B07A1923BA.png" alt="">
-    <span>Momo <b>Shoop</b></span>
-  </div>
-  <div class="header-actions">
-    <img class="flag" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Flag_of_Gabon.svg" alt="Gabon">
-    <button class="btn" id="shipBtn">🚚 Livraison ▾</button>
-    <button class="btn" id="themeBtn">🌙</button>
-    <button class="btn primary badge" id="cartBtn">🛒 Panier <span id="cartCount">0</span></button>
-  </div>
-</header>
+  <main class="phone" role="application" aria-label="Painel sielzada">
+    <header class="header">
+      <div class="avatar" aria-hidden="true"></div>
+      <div class="title">
+        <h1>sielzada</h1>
+        <div class="sub">copyright : sielzada</div>
+      </div>
+    </header>
 
-<!-- Panneau Livraison -->
-<div id="shipPanel">
-  <div class="wrap" style="padding:10px 14px;font-size:14px;color:var(--text);">
-    <strong>Frais de livraison :</strong>
-    <ul>
-      <li>Libreville &amp; Owendo : <b>2 000 FCFA</b></li>
-      <li>Akanda : <b>3 000 FCFA</b></li>
-    </ul>
-    <div style="color:var(--muted);font-size:12px;margin-top:6px;">
-      Livraison à domicile – Paiement Mobile Money ou espèces.
+    <div class="tabs" role="tablist" aria-label="Sections">
+      <button class="tab active" role="tab" aria-selected="true">Funções</button>
+      <button class="tab" role="tab" aria-selected="false" disabled>Info</button>
     </div>
-  </div>
-</div>
 
-<main class="wrap" id="app"></main>
-
-<script>
-/* ========= Config ========= */
-const PHONE = "+24102347742";
-
-/* ========= Produits ========= */
-const products = [
-  {id:"p1",title:"T-shirt col rond — coton",brand:"Momo Shoop",price:25000,image:"https://i.postimg.cc/vBJb54bk/IMG-2358.jpg"},
-  {id:"p2",title:"Sweat à capuche unisexe",brand:"Momo Shoop",price:15000,image:"https://i.postimg.cc/NMfskK9t/IMG-2365.jpg"},
-  {id:"p3",title:"Sweat zippé col montant",brand:"Momo Shoop",price:20000,image:"https://i.postimg.cc/dVxpxDxY/IMG-2366.jpg"},
-  {id:"p4",title:"Survêtement camouflage",brand:"Momo Shoop",price:16000,image:"https://i.postimg.cc/RZ4wxT27/IMG-2367.jpg"},
-  {id:"p5",title:"T-shirt léger uni",brand:"Momo Shoop",price:9000,image:"https://i.postimg.cc/ZKZWW5jT/IMG-2371.jpg"},
-  {id:"p6",title:"T-shirt basique coupe droite",brand:"Momo Shoop",price:9000,image:"https://i.postimg.cc/wBtvCyx0/IMG-2370.jpg"},
-  {id:"p7",title:"Hoodie casual",brand:"Momo Shoop",price:12000,image:"https://i.postimg.cc/MHYK71tc/IMG-2369.jpg"},
-  {id:"p8",title:"Jogger uni",brand:"Momo Shoop",price:10000,image:"https://i.postimg.cc/8zYkmpd4/IMG-2368.jpg"},
-];
-
-/* ========= Grille / Fiche ========= */
-function goto(h){location.hash=h}
-function renderList(){
-  const cards = products.map(p=>`
-    <article class="card">
-      <img src="${p.image}" class="thumb" alt="${p.title}" onclick="goto('#/product/${p.id}')">
-      <div class="box">
-        <div class="brandline">${p.brand}</div>
-        <div class="row"><span>— à partir de</span>
-          <span class="price"><strong>${p.price.toLocaleString('fr-FR')}</strong><small>FCFA</small></span>
+    <section class="card" aria-labelledby="funcs">
+      <div class="list">
+        <div class="item">
+          <div class="icon" aria-hidden="true">🎯</div>
+          <div class="text">
+            <p class="title">Precisão Full</p>
+            <p class="desc">Aumenta a precisão da sua mira em até 5x.</p>
+          </div>
+          <input id="precisao" class="switch" type="checkbox" />
         </div>
-        <div class="title">${p.title}</div>
-      </div>
-    </article>`).join('');
-  document.getElementById('app').innerHTML = `<section class="grid">${cards}</section>`;
-}
-function renderProduct(id){
-  const p = products.find(x=>x.id===id);
-  if(!p){goto('#');return;}
-  document.getElementById('app').innerHTML = `
-    <a class="back-btn" href="#">&larr; Retour à la boutique</a>
-    <div class="product-page">
-      <div class="product-image"><img src="${p.image}" alt=""></div>
-      <div class="product-info">
-        <h1>${p.title}</h1>
-        <div class="price">${p.price.toLocaleString('fr-FR')} FCFA</div>
-        <div class="actions">
-          <button class="btn" onclick="addToCart('${p.id}')">Ajouter au panier</button>
-          <button class="btn primary" onclick="checkoutWhatsApp()">Acheter WhatsApp</button>
+
+        <div class="item">
+          <div class="icon" aria-hidden="true">🌀</div>
+          <div class="text">
+            <p class="title">Reduzir recuo</p>
+            <p class="desc">Remove 60% do recuo de armas AR e SMG.</p>
+          </div>
+          <input id="recuo" class="switch" type="checkbox" />
+        </div>
+
+        <div class="item">
+          <div class="icon" aria-hidden="true">📶</div>
+          <div class="text">
+            <p class="title">Remover Input lag</p>
+            <p class="desc">Retira todos os pequenos lags e travamentos do jogo.</p>
+          </div>
+          <input id="inputlag" class="switch" type="checkbox" />
         </div>
       </div>
-    </div>`;
-}
-function router(){const m=location.hash.match(/^#\/product\/(.+)$/);if(m)renderProduct(m[1]);else renderList();}
-window.addEventListener('hashchange',router);
 
-/* ========= Panier ========= */
-const cart = [];
-function addToCart(id){
-  const p = products.find(x=>x.id===id);
-  if(!p) return;
-  const found = cart.find(i=>i.id===id);
-  if(found) found.qty++; else cart.push({...p, qty:1});
-  updateCart();
-  alert(`${p.title} ajouté au panier.`);
-}
-function updateCart(){
-  document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.qty,0);
-}
+      <button class="cta" id="open">ABRIR O FREE FIRE</button>
+      <p class="footer-note">Exemple de démo — remplace les callbacks JS par tes requêtes réelles.</p>
+    </section>
+  </main>
 
-/* ========= Livraison & WhatsApp ========= */
-function getDeliveryFee(city){
-  const v = (city||"").trim().toLowerCase();
-  if(v.includes("akanda")) return 3000;
-  if(v.includes("owendo") || v.includes("libreville")) return 2000;
-  return 0; // si autre ville (tu peux ajuster)
-}
-const f = n => n.toLocaleString('fr-FR');
+  <script>
+    /**
+     * ———————— LOGIQUE ————————
+     * Chaque option déclenche une fonction d'activation/désactivation.
+     * Tu peux remplacer les console.log par des fetch() vers ton serveur.
+     * Les états sont persistés en localStorage.
+     */
+    const toggles = [
+      { id: 'precisao',   name: 'Precisão Full' },
+      { id: 'recuo',      name: 'Reduzir recuo' },
+      { id: 'inputlag',   name: 'Remover Input lag' },
+    ];
 
-function checkoutWhatsApp(){
-  if(cart.length===0){alert("Votre panier est vide.");return;}
-  const nom = prompt("Votre nom complet ?");
-  const ville = prompt("Ville / Quartier ?");
-  const fee = getDeliveryFee(ville);
-  const sousTotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const total = sousTotal + fee;
+    // Restaure l'état des switches
+    toggles.forEach(t => {
+      const el = document.getElementById(t.id);
+      const saved = localStorage.getItem('switch:'+t.id);
+      if (saved !== null) el.checked = saved === '1';
 
-  const lignes = cart.map((i,ix)=>`${ix+1}) ${i.title} — ${f(i.price)} x ${i.qty} = ${f(i.price*i.qty)} FCFA`).join("\n");
+      el.addEventListener('change', async (e) => {
+        const active = e.target.checked;
+        localStorage.setItem('switch:'+t.id, active ? '1' : '0');
+        try {
+          // >>>> Exemple à remplacer par ton API <<<<
+          // await fetch('/api/toggle', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({key:t.id, active})});
+          console.log(`[ACTION] ${t.name}:`, active ? 'ON' : 'OFF');
+        } catch (err) {
+          console.error(err);
+          // En cas d’erreur réseau, on remet l’état précédent
+          e.target.checked = !active;
+          localStorage.setItem('switch:'+t.id, e.target.checked ? '1' : '0');
+          alert("Impossible d'appliquer l'option pour le moment.");
+        }
+      });
+    });
 
-  const msg = `*Nouvelle commande - Momo Shoop*
-${lignes}
-———————————
-*Sous-total :* ${f(sousTotal)} FCFA
-*Livraison (${ville||"-"}):* ${f(fee)} FCFA
-*Total à payer :* ${f(total)} FCFA
-
-👤 *Client :* ${nom||"-"}
-📍 *Ville :* ${ville||"-"}
-💳 *Paiement :* à confirmer
-
-Merci de confirmer la disponibilité et la livraison.`;
-
-  const url = `https://wa.me/${PHONE.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(msg)}`;
-  window.open(url, '_blank');
-}
-
-/* ========= Header actions ========= */
-document.getElementById('cartBtn').onclick=(e)=>{e.preventDefault();checkoutWhatsApp();}
-document.getElementById('themeBtn').onclick=()=>{
-  const h=document.documentElement;
-  h.dataset.theme=h.dataset.theme==="dark"?"light":"dark";
-};
-document.getElementById('shipBtn').onclick=()=>{
-  const p=document.getElementById('shipPanel');
-  p.style.display=p.style.display==="none"?"block":"none";
-};
-
-/* ========= Init ========= */
-router();
-updateCart();
-</script>
+    // Bouton principal
+    document.getElementById('open').addEventListener('click', async () => {
+      // Exemple d’action (à remplacer par ton vrai déclencheur)
+      console.log('[ACTION] Ouvrir Free Fire');
+      // window.location.href = 'ton-profond-lien://freefire'; // si tu as un lien/app
+      alert('Démo : bouton « ABRIR O FREE FIRE » cliqué.');
+    });
+  </script>
 </body>
 </html>
