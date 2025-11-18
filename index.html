@@ -1,206 +1,643 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Panel – sielzada</title>
+  <meta charset="UTF-8" />
+  <title>Alain Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- ===== CSS INTÉGRÉ ===== -->
   <style>
-    :root{
-      --bg:#0b0f16;
-      --card:#111827;
-      --muted:#8ea0b8;
-      --text:#e6eefc;
-      --accent:#275bff;
-      --accent-weak:#1c2a52;
-      --switch-on:#3b82f6;
-      --switch-off:#2a3344;
-      --divider:#1b2333;
-      --btn:#2f5bff;
-      --btn-text:#e9f0ff;
-      --radius:18px;
-      --radius-sm:14px;
-      --shadow:0 8px 28px rgba(0,0,0,.35);
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background: radial-gradient(1200px 800px at 50% -200px, #0f1530 0%, var(--bg) 60%);
-      color:var(--text);
-      min-height:100svh;
-      display:grid;
-      place-items:center;
-      padding:24px;
+
+    body {
+      background: #f5f5f7;
+      color: #111827;
+      line-height: 1.5;
     }
-    .phone{
-      width:min(420px, 92vw);
-      border-radius:28px;
-      background:linear-gradient(180deg,#0f1830 0%, #0d1322 100%);
-      box-shadow: var(--shadow), inset 0 0 0 1px rgba(255,255,255,.04);
-      padding:18px;
+
+    a {
+      color: inherit;
     }
-    .header{
-      display:flex; align-items:center; gap:14px; padding:6px 6px 14px 6px;
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 1.2rem;
+      background: #ffffffcc;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #e5e7eb;
     }
-    .avatar{
-      width:52px;height:52px;border-radius:50%;
-      background:#0d1528 url('') center/cover no-repeat;
-      border:2px solid rgba(255,255,255,.08);
-      box-shadow:0 0 0 3px rgba(39,91,255,.2);
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
     }
-    .title h1{
-      font-size:1.1rem; margin:0 0 4px 0; letter-spacing:.2px;
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.1rem;
+      line-height: 1.1;
     }
-    .title .sub{font-size:.8rem; color:var(--muted)}
-    .tabs{
-      display:flex; gap:10px; padding:8px; background:#0e1526; border-radius:16px; 
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.95rem;
     }
-    .tab{
-      flex:1; text-align:center; padding:10px 12px; border-radius:12px; font-weight:600;
-      color:var(--muted); background:transparent; border:none; cursor:pointer;
+
+    .nav-links a {
+      text-decoration: none;
+      color: #4b5563;
     }
-    .tab.active{ color:#dbe6ff; background:linear-gradient(180deg,#11214a 0%, #0e1a3a 100%); box-shadow: inset 0 0 0 1px rgba(59,130,246,.35)}
-    .card{
-      background:var(--card);
-      border-radius:var(--radius);
-      padding:14px;
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);
+
+    .nav-links a:hover {
+      color: #111827;
     }
-    .list{ display:grid; gap:12px; margin-top:14px;}
-    .item{
-      display:flex; align-items:center; gap:12px; padding:14px;
-      border-radius:var(--radius-sm); background:#0d1526;
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+
+    .cart-button {
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      cursor: pointer;
+      font-size: 0.9rem;
+      white-space: nowrap;
     }
-    .icon{
-      width:36px;height:36px;border-radius:10px;
-      display:grid;place-items:center;
-      background:linear-gradient(180deg,#162a5e,#0e1f4a);
-      box-shadow:inset 0 0 0 1px rgba(59,130,246,.35);
-      font-size:18px;
+
+    .cart-button:hover {
+      background: #f3f4f6;
     }
-    .text{flex:1; min-width:0}
-    .text .title{font-weight:700; font-size:.98rem; margin:0 0 4px 0}
-    .text .desc{color:var(--muted); font-size:.86rem; line-height:1.2}
-    .switch{
-      --w:52px; --h:30px;
-      appearance:none; width:var(--w); height:var(--h);
-      background:var(--switch-off); border-radius:999px; position:relative; outline:none;
-      cursor:pointer; transition:.25s background;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+
+    /* Bouton menu mobile (hamburger) */
+    .mobile-menu-button {
+      display: none;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      border-radius: 999px;
+      padding: 0.35rem 0.7rem;
+      cursor: pointer;
+      font-size: 0.9rem;
     }
-    .switch::after{
-      content:""; position:absolute; top:3px; left:3px;
-      width:24px; height:24px; border-radius:50%; background:#fff;
-      box-shadow:0 3px 10px rgba(0,0,0,.4); transition:.25s left;
+
+    .mobile-menu-button span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: #111827;
+      margin: 3px 0;
+      border-radius: 999px;
     }
-    .switch:checked{ background:var(--switch-on) }
-    .switch:checked::after{ left: calc(var(--w) - 27px) }
-    .cta{
-      margin-top:16px;
-      width:100%; padding:14px 16px; border-radius:14px; border:none; cursor:pointer;
-      background:linear-gradient(180deg,#3b66ff,#254bff);
-      color:var(--btn-text); font-weight:800; letter-spacing:.2px;
-      box-shadow:0 10px 24px rgba(47,91,255,.35), inset 0 0 0 1px rgba(255,255,255,.18);
+
+    /* Menu déroulant mobile */
+    .mobile-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      padding: 0.8rem 1.2rem 1rem;
+      display: none;
     }
-    .footer-note{
-      text-align:center; margin-top:10px; color:var(--muted); font-size:.78rem;
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 0.5rem 0;
+      text-decoration: none;
+      color: #4b5563;
+      font-size: 0.95rem;
+    }
+
+    .mobile-menu a:hover {
+      color: #111827;
+    }
+
+    /* ===== SECTIONS GÉNÉRALES ===== */
+    .section {
+      padding: 2.5rem 1.2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section h2 {
+      font-size: 1.6rem;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 55vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.2rem;
+      background: linear-gradient(135deg, #eef2ff, #fef3c7);
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .hero p {
+      color: #4b5563;
+      margin-bottom: 1.3rem;
+    }
+
+    /* ===== BOUTONS ===== */
+    .btn-primary,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: #111827;
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .btn-secondary:hover {
+      background: #d1d5db;
+    }
+
+    /* ===== PRODUITS ===== */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.3rem;
+    }
+
+    .product-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .product-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .product-price {
+      font-weight: 600;
+      color: #16a34a;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ===== PANIER ===== */
+    .cart-section {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+      padding: 2rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .cart-items {
+      border-top: 1px solid #e5e7eb;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 0.7rem 0 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.35rem 0;
+      font-size: 0.95rem;
+    }
+
+    .cart-item-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .cart-item-actions button {
+      padding: 0.25rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      cursor: pointer;
+      font-size: 0.8rem;
+      min-width: 24px;
+    }
+
+    .cart-item-actions button:hover {
+      background: #e5e7eb;
+    }
+
+    .cart-remove {
+      border: none !important;
+      background: transparent !important;
+      color: #ef4444;
+      font-size: 1rem !important;
+    }
+
+    .cart-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .cart-summary-total {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .cart-empty {
+      font-size: 0.9rem;
+      color: #6b7280;
+      padding: 0.4rem 0;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center;
+      padding: 1.5rem 1rem 2rem;
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+
+    /* ===== UTILITAIRE ===== */
+    .hidden {
+      display: none !important;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu-button {
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .navbar {
+        padding: 0.7rem 1rem;
+      }
+
+      .hero {
+        padding: 2.4rem 1.2rem 2.7rem;
+        min-height: 45vh;
+      }
+
+      .hero h1 {
+        font-size: 1.6rem;
+      }
+
+      .section {
+        padding: 2rem 1.2rem;
+      }
+
+      .cart-section {
+        padding: 1.5rem 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
-  <main class="phone" role="application" aria-label="Painel sielzada">
-    <header class="header">
-      <div class="avatar" aria-hidden="true"></div>
-      <div class="title">
-        <h1>sielzada</h1>
-        <div class="sub">copyright : sielzada</div>
-      </div>
-    </header>
-
-    <div class="tabs" role="tablist" aria-label="Sections">
-      <button class="tab active" role="tab" aria-selected="true">Funções</button>
-      <button class="tab" role="tab" aria-selected="false" disabled>Info</button>
+  <!-- ===== NAVBAR ===== -->
+  <header class="navbar">
+    <div class="navbar-left">
+      <div class="logo">Alain<br />Shop</div>
+      <nav class="nav-links">
+        <a href="#hero">Accueil</a>
+        <a href="#products">Boutique</a>
+      </nav>
     </div>
 
-    <section class="card" aria-labelledby="funcs">
-      <div class="list">
-        <div class="item">
-          <div class="icon" aria-hidden="true">🎯</div>
-          <div class="text">
-            <p class="title">Precisão Full</p>
-            <p class="desc">Aumenta a precisão da sua mira em até 5x.</p>
-          </div>
-          <input id="precisao" class="switch" type="checkbox" />
-        </div>
+    <div style="display: flex; align-items: center; gap: 0.6rem;">
+      <button
+        class="mobile-menu-button"
+        id="mobileMenuToggle"
+        aria-label="Ouvrir le menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-        <div class="item">
-          <div class="icon" aria-hidden="true">🌀</div>
-          <div class="text">
-            <p class="title">Reduzir recuo</p>
-            <p class="desc">Remove 60% do recuo de armas AR e SMG.</p>
-          </div>
-          <input id="recuo" class="switch" type="checkbox" />
-        </div>
+      <button class="cart-button" id="cartToggle">
+        Panier (<span id="cartCount">0</span>)
+      </button>
+    </div>
 
-        <div class="item">
-          <div class="icon" aria-hidden="true">📶</div>
-          <div class="text">
-            <p class="title">Remover Input lag</p>
-            <p class="desc">Retira todos os pequenos lags e travamentos do jogo.</p>
-          </div>
-          <input id="inputlag" class="switch" type="checkbox" />
-        </div>
-      </div>
+    <!-- Menu déroulant mobile -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#hero">Accueil</a>
+      <a href="#products">Boutique</a>
+    </div>
+  </header>
 
-      <button class="cta" id="open">ABRIR O FREE FIRE</button>
-      <p class="footer-note">Exemple de démo — remplace les callbacks JS par tes requêtes réelles.</p>
-    </section>
-  </main>
+  <!-- ===== HERO ===== -->
+  <section id="hero" class="hero">
+    <div>
+      <h1>Bienvenue sur Alain Shop</h1>
+      <p>Vêtements, chaussures et accessoires tendance au Gabon, payement en main propre ou mobile money.</p>
+      <a href="#products" class="btn-primary">Voir les articles</a>
+    </div>
+  </section>
 
+  <!-- ===== PRODUITS ===== -->
+  <section id="products" class="section">
+    <h2>Nos catégories phares</h2>
+    <div class="products-grid">
+      <!-- T-shirts -->
+      <article class="product-card">
+        <img src="https://via.placeholder.com/600x400?text=T-shirts" alt="T-shirts" />
+        <h3>T-shirts</h3>
+        <p class="product-price">À partir de 5 000 FCFA</p>
+        <button class="btn-secondary add-to-cart" data-id="1">
+          Ajouter au panier
+        </button>
+      </article>
+
+      <!-- Pantalons -->
+      <article class="product-card">
+        <img src="https://via.placeholder.com/600x400?text=Pantalons" alt="Pantalons" />
+        <h3>Pantalons</h3>
+        <p class="product-price">À partir de 10 000 FCFA</p>
+        <button class="btn-secondary add-to-cart" data-id="2">
+          Ajouter au panier
+        </button>
+      </article>
+
+      <!-- Chaussures -->
+      <article class="product-card">
+        <img src="https://via.placeholder.com/600x400?text=Chaussures" alt="Chaussures" />
+        <h3>Chaussures</h3>
+        <p class="product-price">À partir de 15 000 FCFA</p>
+        <button class="btn-secondary add-to-cart" data-id="3">
+          Ajouter au panier
+        </button>
+      </article>
+
+      <!-- Accessoires -->
+      <article class="product-card">
+        <img src="https://via.placeholder.com/600x400?text=Accessoires" alt="Accessoires" />
+        <h3>Accessoires</h3>
+        <p class="product-price">À partir de 3 000 FCFA</p>
+        <button class="btn-secondary add-to-cart" data-id="4">
+          Ajouter au panier
+        </button>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== PANIER ===== -->
+  <section id="cartSection" class="section cart-section hidden">
+    <h2>Votre panier</h2>
+    <div id="cartItems" class="cart-items">
+      <p class="cart-empty">Votre panier est vide.</p>
+    </div>
+    <div class="cart-summary">
+      <p class="cart-summary-total">
+        Total : <span id="cartTotal">0 FCFA</span>
+      </p>
+      <button class="btn-primary" id="checkoutButton">
+        Envoyer la commande sur WhatsApp
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> Alain Shop - Tous droits réservés.</p>
+  </footer>
+
+  <!-- ===== JAVASCRIPT INTÉGRÉ ===== -->
   <script>
-    /**
-     * ———————— LOGIQUE ————————
-     * Chaque option déclenche une fonction d'activation/désactivation.
-     * Tu peux remplacer les console.log par des fetch() vers ton serveur.
-     * Les états sont persistés en localStorage.
-     */
-    const toggles = [
-      { id: 'precisao',   name: 'Precisão Full' },
-      { id: 'recuo',      name: 'Reduzir recuo' },
-      { id: 'inputlag',   name: 'Remover Input lag' },
+    // Année dans le footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Numéro WhatsApp au format international, sans + ni espaces
+    // Tu m'as donné : +241 65240509 -> 24165240509
+    const WHATSAPP_NUMBER = "24165240509";
+
+    // Données produits (tu pourras changer les prix ou les noms)
+    // price = valeur numérique utilisée pour le calcul du total (en FCFA)
+    const products = [
+      { id: 1, name: "T-shirts", price: 5000 },
+      { id: 2, name: "Pantalons", price: 10000 },
+      { id: 3, name: "Chaussures", price: 15000 },
+      { id: 4, name: "Accessoires", price: 3000 },
     ];
 
-    // Restaure l'état des switches
-    toggles.forEach(t => {
-      const el = document.getElementById(t.id);
-      const saved = localStorage.getItem('switch:'+t.id);
-      if (saved !== null) el.checked = saved === '1';
+    // État du panier
+    let cart = [];
 
-      el.addEventListener('change', async (e) => {
-        const active = e.target.checked;
-        localStorage.setItem('switch:'+t.id, active ? '1' : '0');
-        try {
-          // >>>> Exemple à remplacer par ton API <<<<
-          // await fetch('/api/toggle', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({key:t.id, active})});
-          console.log(`[ACTION] ${t.name}:`, active ? 'ON' : 'OFF');
-        } catch (err) {
-          console.error(err);
-          // En cas d’erreur réseau, on remet l’état précédent
-          e.target.checked = !active;
-          localStorage.setItem('switch:'+t.id, e.target.checked ? '1' : '0');
-          alert("Impossible d'appliquer l'option pour le moment.");
-        }
+    // Sélecteurs
+    const addToCartButtons = document.querySelectorAll(".add-to-cart");
+    const cartItemsContainer = document.getElementById("cartItems");
+    const cartCountElement = document.getElementById("cartCount");
+    const cartTotalElement = document.getElementById("cartTotal");
+    const cartSection = document.getElementById("cartSection");
+    const cartToggleButton = document.getElementById("cartToggle");
+    const checkoutButton = document.getElementById("checkoutButton");
+    const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    // Ouverture / fermeture du panier
+    cartToggleButton.addEventListener("click", () => {
+      cartSection.classList.toggle("hidden");
+      if (!cartSection.classList.contains("hidden")) {
+        cartSection.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+
+    // Menu mobile (hamburger)
+    mobileMenuToggle.addEventListener("click", () => {
+      mobileMenu.classList.toggle("open");
+    });
+
+    // Ferme le menu mobile quand on clique sur un lien
+    mobileMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("open");
       });
     });
 
-    // Bouton principal
-    document.getElementById('open').addEventListener('click', async () => {
-      // Exemple d’action (à remplacer par ton vrai déclencheur)
-      console.log('[ACTION] Ouvrir Free Fire');
-      // window.location.href = 'ton-profond-lien://freefire'; // si tu as un lien/app
-      alert('Démo : bouton « ABRIR O FREE FIRE » cliqué.');
+    // Ajout au panier
+    addToCartButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const productId = Number(btn.dataset.id);
+        const product = products.find((p) => p.id === productId);
+        if (!product) return;
+
+        const inCart = cart.find((item) => item.id === product.id);
+        if (inCart) {
+          inCart.qty += 1;
+        } else {
+          cart.push({ ...product, qty: 1 });
+        }
+        updateCartUI();
+      });
+    });
+
+    // Mise à jour de l'affichage du panier
+    function updateCartUI() {
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML =
+          '<p class="cart-empty">Votre panier est vide.</p>';
+        cartTotalElement.textContent = "0 FCFA";
+        cartCountElement.textContent = "0";
+        return;
+      }
+
+      cartItemsContainer.innerHTML = "";
+      let total = 0;
+      let totalCount = 0;
+
+      cart.forEach((item) => {
+        const itemTotal = item.price * item.qty;
+        total += itemTotal;
+        totalCount += item.qty;
+
+        const row = document.createElement("div");
+        row.className = "cart-item";
+
+        row.innerHTML = `
+          <div class="cart-item-details">
+            <span>${item.name}</span>
+            <span>${item.price.toLocaleString("fr-FR")} FCFA</span>
+          </div>
+          <div class="cart-item-actions">
+            <button data-id="${item.id}" data-action="decrease">-</button>
+            <span>${item.qty}</span>
+            <button data-id="${item.id}" data-action="increase">+</button>
+            <button class="cart-remove" data-id="${item.id}" data-action="remove">✕</button>
+          </div>
+        `;
+
+        cartItemsContainer.appendChild(row);
+      });
+
+      cartTotalElement.textContent =
+        total.toLocaleString("fr-FR") + " FCFA";
+      cartCountElement.textContent = String(totalCount);
+
+      // Gère les boutons + / - / supprimer
+      cartItemsContainer
+        .querySelectorAll("button[data-action]")
+        .forEach((button) => {
+          button.addEventListener("click", () => {
+            const id = Number(button.dataset.id);
+            const action = button.dataset.action;
+            handleCartAction(id, action);
+          });
+        });
+    }
+
+    // Actions sur le panier
+    function handleCartAction(id, action) {
+      const index = cart.findIndex((item) => item.id === id);
+      if (index === -1) return;
+
+      if (action === "increase") {
+        cart[index].qty += 1;
+      } else if (action === "decrease") {
+        cart[index].qty -= 1;
+        if (cart[index].qty <= 0) {
+          cart.splice(index, 1);
+        }
+      } else if (action === "remove") {
+        cart.splice(index, 1);
+      }
+
+      updateCartUI();
+    }
+
+    // Construit le message pour WhatsApp à partir du panier
+    function buildWhatsAppMessage() {
+      let message = "Bonjour, je souhaite passer une commande sur Alain Shop :\n\n";
+      let total = 0;
+
+      cart.forEach((item) => {
+        const lineTotal = item.price * item.qty;
+        total += lineTotal;
+        message += `- ${item.name} x${item.qty} = ${lineTotal.toLocaleString("fr-FR")} FCFA\n`;
+      });
+
+      message += `\nTotal : ${total.toLocaleString("fr-FR")} FCFA\n`;
+      message += "\nNom : \nAdresse de livraison : \nMode de paiement (espèces / mobile money) : ";
+
+      return message;
+    }
+
+    // Bouton "Envoyer la commande sur WhatsApp"
+    checkoutButton.addEventListener("click", () => {
+      if (cart.length === 0) {
+        alert("Votre panier est vide.");
+        return;
+      }
+
+      const text = buildWhatsAppMessage();
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+        text
+      )}`;
+
+      // Redirection vers WhatsApp (appli ou web)
+      window.location.href = url;
     });
   </script>
 </body>
