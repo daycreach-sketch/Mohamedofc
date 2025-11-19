@@ -1,40 +1,196 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Texte en bangala</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-        }
-        h1 {
-            text-align: center;
-        }
-        .bangala-text {
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            white-space: pre-line;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AUXÍLIO MOHAX</title>
+  <style>
+    body{
+      margin:0;
+      padding:0;
+      background:#000;
+      color:#22FF66;
+      font-family: monospace;
+      text-transform:uppercase;
+      overflow:hidden;
+    }
+    h1{text-align:center;text-shadow:0 0 8px #22FF66;}
+    .panel, .login-box{
+      padding:20px;
+      border:1px solid #22FF66;
+      border-radius:10px;
+      background:rgba(0,30,0,0.85);
+      max-width:500px;
+      margin:40px auto;
+      position:relative;
+      z-index:1;
+    }
+    label{display:block;margin-top:15px}
+    input[type=range]{width:100%}
+    input[type=text], input[type=password]{
+      width:100%;
+      padding:8px;
+      margin-top:5px;
+      border-radius:5px;
+      border:1px solid #22FF66;
+      background:#001210;
+      color:#22FF66;
+      text-transform:uppercase;
+      box-sizing:border-box;
+    }
+    .value{font-size:12px;color:#A8EFC0}
+    .button{
+      display:block;
+      margin-top:15px;
+      padding:12px;
+      background:#22FF66;
+      color:#001210;
+      text-align:center;
+      font-weight:bold;
+      border-radius:8px;
+      text-decoration:none;
+      cursor:pointer;
+    }
+    #status{
+      margin-top:15px;
+      padding:10px;
+      background:#003300;
+      border:1px solid #22FF66;
+      text-align:center;
+      font-size:12px;
+      display:none;
+    }
+    .error{
+      margin-top:10px;
+      color:#FF5555;
+      font-size:12px;
+    }
+    canvas{
+      position:fixed;
+      top:0;left:0;
+      width:100%;height:100%;
+      z-index:0;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Texte en bangala</h1>
+<canvas id="bg"></canvas>
 
-        <div class="bangala-text">
-            <!-- Remplace ce texte par ton texte en bangala -->
-            Salam, oyo ezali ndakisa ya lokasa HTML
-            oyo ezali kolakisa ndambo ya makomi
-            na lokota "bangala".
-        </div>
-    </div>
+<!-- LOGIN -->
+<div class="login-box" id="login-box">
+  <h1>AUXÍLIO MOHAX</h1>
+  <form id="login-form">
+    <label>UTILISATEUR</label>
+    <input type="text" id="login-user" placeholder="USUÁRIO">
+
+    <label>MOT DE PASSE</label>
+    <input type="password" id="login-pass" placeholder="********">
+
+    <div class="button" onclick="attemptLogin()">ENTRAR</div>
+    <div class="error" id="login-error" style="display:none;"></div>
+  </form>
+</div>
+
+<!-- PANEL -->
+<div class="panel" id="main-panel" style="display:none;">
+  <h1>AUXÍLIO MOHAX</h1>
+
+  <label>SENSIBILIDADE MIRA</label>
+  <input type="range" min="0" max="10" value="5"
+         oninput="this.nextElementSibling.innerText='VALOR: '+this.value">
+  <div class="value">VALOR: 5</div>
+
+  <label>0 DELEY NO TOQUE</label>
+  <input type="range" min="0" max="10" value="0"
+         oninput="this.nextElementSibling.innerText='VALOR: '+this.value">
+  <div class="value">VALOR: 0</div>
+
+  <label>ESTABILIZAR MIRA</label>
+  <input type="range" min="0" max="10" value="0"
+         oninput="this.nextElementSibling.innerText='VALOR: '+this.value">
+  <div class="value">VALOR: 0</div>
+
+  <a class="button" onclick="ativarOtimizacao()">OTIMIZAR JOGO</a>
+  <a class="button" onclick="abrirAppFreeFire()">ABRIR FREE FIRE</a>
+  <a class="button" onclick="abrirAppFreeFireMax()">ABRIR FREE FIRE MAX</a>
+  
+  <div id="status">FUNÇÃO ATIVADA!</div>
+</div>
+
+<script>
+  // LOGIN FIXE : MohaX / 1
+  const FIXED_USER = "MOHAX";
+  const FIXED_PASS = "1";
+
+  function attemptLogin(){
+    const userInput = document.getElementById("login-user").value.toUpperCase().trim();
+    const passInput = document.getElementById("login-pass").value.trim();
+    const errorBox = document.getElementById("login-error");
+
+    if (userInput !== FIXED_USER || passInput !== FIXED_PASS){
+      errorBox.style.display = "block";
+      errorBox.innerText = "LOGIN OU MOT DE PASSE INVALIDE.";
+      return;
+    }
+
+    document.getElementById("login-box").style.display = "none";
+    document.getElementById("main-panel").style.display = "block";
+  }
+
+  // Status
+  function ativarOtimizacao(){
+    const box=document.getElementById("status");
+    box.style.display="block";
+    box.innerText="FUNÇÃO OTIMIZAR JOGO ATIVADA!";
+    setTimeout(()=>{box.style.display="none";},3000);
+  }
+
+  // OUVERTURE DIRECTE DES APKS
+  function abrirAppFreeFire(){
+    window.location.href = "freefire://";
+  }
+
+  function abrirAppFreeFireMax(){
+    window.location.href = "freefiremax://";
+  }
+
+  // MATRIX EFFECT
+  const canvas=document.getElementById("bg");
+  const ctx=canvas.getContext("2d");
+
+  function resizeCanvas(){
+    canvas.height=window.innerHeight;
+    canvas.width=window.innerWidth;
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  const letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const fontSize=14;
+  let columns=canvas.width/fontSize;
+  let drops=[];
+
+  function initDrops(){
+    columns=canvas.width/fontSize;
+    drops=[];
+    for(let x=0;x<columns;x++) drops[x]=1;
+  }
+  initDrops();
+  window.addEventListener("resize", initDrops);
+
+  function draw(){
+    ctx.fillStyle="rgba(0,0,0,0.05)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="#22FF66";
+    ctx.font=fontSize+"px monospace";
+    for(let i=0;i<drops.length;i++){
+      const text=letters.charAt(Math.floor(Math.random()*letters.length));
+      ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+      if(drops[i]*fontSize>canvas.height&&Math.random()>0.975) drops[i]=0;
+      drops[i]++;
+    }
+  }
+  setInterval(draw,35);
+</script>
 </body>
 </html>
